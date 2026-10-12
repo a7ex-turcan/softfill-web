@@ -47,8 +47,11 @@ page names. These URLs are final, because the app and App Store Connect will poi
 | Support | `/support` | `/de/support`, … | FAQ and contact (App Store Connect support URL) |
 | Not found | `404.html` | — | Friendly 404 with a way home |
 
-Serve each page as `privacy/index.html` and so on, so the URLs need no `.html`. Every page carries
-`hreflang` links to its other languages and a language switcher that keeps the visitor on the same page.
+Serve each page as `privacy/index.html` and so on, so the URLs need no `.html`. GitHub Pages then answers
+`/privacy` with a 301 to `/privacy/`, so both forms work and the app and App Store Connect can use either;
+the site's own links, canonical URLs, `hreflang` and the sitemap use the trailing slash to skip the redirect.
+Every page carries `hreflang` links to its other languages and a language switcher that keeps the visitor on
+the same page.
 
 ### Home, top to bottom
 Designed and approved: `design_handoff_softfill_web/README.md` is the spec (structure, sizes, copy,
@@ -287,12 +290,19 @@ no-break space before the dot so it never starts a line. The parental gate mock'
   through Cloudflare before the certificate exists blocks it. Once `https://softfill.nutrx-labs.com` answers
   with GitHub's certificate, enforce HTTPS:
   `gh api -X PUT repos/a7ex-turcan/softfill-web/pages -F https_enforced=true`.
-- Status 2026-10-12: Pages builds and serves; the Cloudflare record does not exist yet, so the domain doesn't
-  resolve and the site can't be reached. Claude has no Cloudflare access; Alex adds the record.
+- Status 2026-10-12: the `softfill` CNAME exists (created by Claude through the Cloudflare MCP server, DNS only,
+  with a comment saying why), resolves publicly, and GitHub's health check passes. The site answers over
+  HTTP; GitHub's certificate for the domain was still pending, so HTTPS isn't enforced yet.
+- Cloudflare access: the official Cloudflare MCP server (`https://mcp.cloudflare.com/mcp`) is installed in
+  Alex's local Claude Code config for this project and signed in as his account. DNS changes still need his
+  go-ahead first, like any outward-facing change.
+- **Email**: the zone has no MX records, so mail to `softfill@nutrx-labs.com` (on Support, Privacy, Terms and
+  every footer, and the app's Contact link) can't be delivered. It has Brevo's sending records (DKIM, DMARC)
+  only. Open until Alex picks how to receive it, for example Cloudflare Email Routing forwarding to his inbox.
 - Recommended once DNS works: verify `nutrx-labs.com` for the account (GitHub settings, Pages, "Add a
   domain", a TXT record at Cloudflare), so no other GitHub account can claim a subdomain of it.
-- Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first. Done for the
-  repo and Pages (approved 2026-10-12); the DNS record is still Alex's.
+- Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first. All three
+  done on 2026-10-12 with his approval.
 
 ## Order of work
 

@@ -157,11 +157,13 @@ def render(text, ctx, where, depth=0):
 
 
 def url_for(page, lang):
+    """The URL a page is served at. GitHub Pages serves each page as a folder, so `/privacy` answers with a
+    301 to `/privacy/`; the site's own links, canonical URLs and sitemap use the trailing slash to skip it."""
     segment = PAGES[page][1]
     prefix = "" if lang == DEFAULT_LANG else f"/{lang}"
     if segment == "":
         return f"{prefix}/"
-    return f"{prefix}/{segment}"
+    return f"{prefix}/{segment}/"
 
 
 def alternates_html(page):
@@ -230,7 +232,7 @@ def build_page(page, lang, strings, css_url, js_url, out_dir, allow_missing):
     ctx = page_context(page, lang, strings, css_url, js_url, article)
     ctx["content_html"] = render(read_template(template), ctx, template)
     document = render(read_template("base.html"), ctx, "base.html")
-    target = out_dir / url_for(page, lang).lstrip("/") / "index.html"
+    target = out_dir / url_for(page, lang).strip("/") / "index.html"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(document, encoding="utf-8")
 
