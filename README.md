@@ -6,8 +6,8 @@ Connect link to: privacy policy, terms of use and support, in English, German, R
 
 **Status (2026-10-12):** the build is in place. Home follows the approved design, with art and videos
 rendered from the app's own drawings. Privacy, Terms, Support and the 404 page are written in English.
-German, Romanian and Russian follow the app's translation pass. GitHub Pages and the domain are not switched
-on yet.
+German, Romanian and Russian follow the app's translation pass. GitHub Pages is on and serves `main`'s `/docs`;
+the site goes live at https://softfill.nutrx-labs.com once the Cloudflare DNS record exists.
 
 ## Build and preview
 
@@ -51,7 +51,7 @@ Change `src/` and rebuild; never edit `docs/` by hand. Commit `src/` and the reb
 
 GitHub Pages, "Deploy from a branch", branch `main`, folder `/docs`. `docs/CNAME` holds
 `softfill.nutrx-labs.com`; DNS is a CNAME at Cloudflare pointing at `a7ex-turcan.github.io`. Every change
-goes through a pull request into `main`; pushing to `main` publishes the site.
+goes through a pull request into `main`, and merging into `main` publishes the site.
 
 ## Constraints
 

@@ -273,15 +273,26 @@ no-break space before the dot so it never starts a line. The parental gate mock'
 
 ## Hosting
 
-- GitHub repo `a7ex-turcan/softfill-web`, created private on 2026-10-12. Pages settings: "Deploy from a
-  branch", branch `main`, folder `/docs`. No GitHub Actions; the committed `docs/` is what gets served. Pages
-  on a private repo needs a paid GitHub plan (Pro for a personal account); on the Free plan the repo has to be
-  public first. Alex's call.
-- `docs/CNAME` contains `softfill.nutrx-labs.com`; the build writes it, so it survives every rebuild.
-- DNS at Cloudflare: a CNAME record `softfill` → `a7ex-turcan.github.io`, **DNS only (grey cloud)** until
-  GitHub has issued the HTTPS certificate; then tick "Enforce HTTPS" in the repo's Pages settings. Proxying
-  through Cloudflare before the certificate exists blocks it.
-- Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first.
+- GitHub repo `a7ex-turcan/softfill-web`, created on 2026-10-12 and made **public** the same day (Alex's
+  call), because Pages on a private repo needs a paid plan. Everything committed here, including the history
+  and this file, is public.
+- Pages enabled through the API on 2026-10-12: "Deploy from a branch" (`build_type` legacy), branch `main`,
+  folder `/docs`. No GitHub Actions; the committed `docs/` is what gets served, and `docs/.nojekyll` turns
+  Jekyll off. Check a build with `gh api repos/a7ex-turcan/softfill-web/pages/builds/latest`.
+- `docs/CNAME` contains `softfill.nutrx-labs.com`; the build writes it, so it survives every rebuild, and Pages
+  read the custom domain from it. So `a7ex-turcan.github.io/softfill-web/` redirects to the domain, and the
+  site can only be seen there (its links are root-relative too).
+- DNS at Cloudflare (nameservers `jeff` and `sonia.ns.cloudflare.com`): a CNAME record `softfill` →
+  `a7ex-turcan.github.io`, **DNS only (grey cloud)** until GitHub has issued the HTTPS certificate. Proxying
+  through Cloudflare before the certificate exists blocks it. Once `https://softfill.nutrx-labs.com` answers
+  with GitHub's certificate, enforce HTTPS:
+  `gh api -X PUT repos/a7ex-turcan/softfill-web/pages -F https_enforced=true`.
+- Status 2026-10-12: Pages builds and serves; the Cloudflare record does not exist yet, so the domain doesn't
+  resolve and the site can't be reached. Claude has no Cloudflare access; Alex adds the record.
+- Recommended once DNS works: verify `nutrx-labs.com` for the account (GitHub settings, Pages, "Add a
+  domain", a TXT record at Cloudflare), so no other GitHub account can claim a subdomain of it.
+- Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first. Done for the
+  repo and Pages (approved 2026-10-12); the DNS record is still Alex's.
 
 ## Order of work
 
