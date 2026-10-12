@@ -8,3 +8,6 @@ __pycache__/
 # Screenshots taken while checking pages (headless Chrome writes them next to the repo root)
 /*.png
 /screenshots/
+
+# Intermediate renders (tools/art/build.sh og-art)
+/tools/art/out/

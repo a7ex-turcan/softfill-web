@@ -13,7 +13,8 @@ src/templates/                 page templates and shared partials (see "Build")
 src/strings/                   one JSON file of UI strings per language: en, de, ro, ru
 src/articles/                  long-form bodies per language: privacy.en.html, terms.de.html, …
 src/assets/                    css/, fonts/ (self-hosted Nunito with its OFL licence), img/, video/, js/
-tools/                         helpers that write into src/: make_og.py (Open Graph images), screenshots.sh
+tools/                         helpers that write into src/: art/ (Home's art from the app's drawings),
+                               make_og.py (Open Graph images), screenshots.sh
 docs/                          the generated site that GitHub Pages serves; never edited by hand
 design_handoff_softfill_web/   the website design from Claude Design (read-only; regenerate from Claude
                                Design, don't hand-edit). README.md is the build spec for Home; copy-rules.md
@@ -62,6 +63,18 @@ tokens, states) and wins over this summary.
    prices on the site; they differ by country and the App Store shows the real ones.
 6. **iPad and iPhone**, art kept in sync through the user's own iCloud.
 7. A closing call to action.
+
+Built 2026-10-12, with these choices on top of the handoff:
+- The hero's drawing is a video (Sunny Meadow in the "Garden party" palette, eleven fills), with the HTML
+  canvas chrome around it so the device's text can be translated. 1152 px for wide screens, 768 px below
+  700 px; no video at all under reduced motion.
+- Art from the app's own drawings: the Little card is Sea Turtle (Coral reef), the Easy card Fox Den (Fox
+  glade), the time-lapse Pond Ducks (Beach day). The Detailed and Intricate cards show "First packs on the
+  way" on an empty dotted page until those levels have art; then add recipe outputs and swap the two
+  `level-art-soon` blocks in `home.html` for pictures.
+- "No accounts" says "on your device and in your own iCloud", because iCloud sync is built (Product facts,
+  Devices). The Devices section uses the not-shipped copy; `IPHONE_SHIPPED` switches it and hides the phone's
+  "Coming soon" pill.
 
 ### Support
 A short intro, an FAQ with expandable answers (use `<details>`), and the contact address. FAQ topics:
@@ -168,7 +181,12 @@ Design system, from `../softfill/design_handoff_softfill/spec/design-tokens.md` 
 Assets:
 
 - **Line art**: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/Drawings/<id>/lineart.png`
-  (transparent, 1536 or 2048 wide) and `thumbnail.png`. Colored examples can be rendered from the app.
+  (black on white, 8-bit grey, 1536 or 2048 wide), with `regions.bin` and `drawing.json` beside it.
+- **Colored art and videos**: `tools/art/build.sh` renders them from those files, as the app colors them: each
+  region in its palette color by slot, the line art multiplied on top. `tools/art/recipe.json` lists every
+  output (drawing, palette, which regions, crop, sizes); `render --debug <id> out.png` numbers a drawing's
+  regions for writing a recipe. Stills come out as AVIF with a JPEG fallback, videos as H.264 MP4, all with
+  the macOS frameworks only. Rerun it when the app's art or palettes change, then rebuild.
 - **Screenshots**: from the app on the iPad simulator now; iPhone ones after the Phase 3 layouts.
 - **App Store badges**: Apple's official, localized badges from Apple's marketing resources, self-hosted,
   used as Apple's guidelines say.
@@ -222,9 +240,11 @@ dependency tree, a slower first paint and GitHub Pages routing work for no gain.
 - **Preview**: `python3 build.py && python3 -m http.server 8000 -d docs`, then http://localhost:8000.
   Absolute links like `/privacy` need the local server; `file://` will not resolve them.
 - Change `src/` and rebuild; never edit `docs/` by hand. Commit `src/` and the rebuilt `docs/` together.
-- JavaScript only where HTML cannot do it: the language menu's open, close, Escape and outside click, in one
-  small self-hosted file. The FAQ uses `<details>`. The hero is a muted looping video with a poster frame,
-  and only the poster under `prefers-reduced-motion`.
+- JavaScript only where HTML cannot do it, in one small self-hosted file: the language menu (a `<details>`)
+  closing on Escape, an outside click and focus leaving; starting the hero video when autoplay alone didn't;
+  and the time-lapse card's play button and scrubber. The FAQ uses `<details>`. The hero is a muted looping
+  video over a poster image; its `<source>`s match only `prefers-reduced-motion: no-preference`, so under
+  reduced motion nothing loads and the poster stays.
 
 ## Constraints
 
@@ -242,6 +262,9 @@ dependency tree, a slower first paint and GitHub Pages routing work for no gain.
 English first, then German, Romanian and Russian with the app's Phase 3 translation pass, read by a native
 speaker. Keep wording consistent with the app's own strings (`../softfill/Softfill/Localizable.xcstrings`).
 In Romanian use the standard forms (o sută, șaizeci, paisprezece, șaisprezece), as the app does.
+Strings that join two parts with " · " (the level lines, the hero note) carry a no-break space before the dot so
+it never starts a line; keep it in translations. The parental gate mock's number in words must match its digits
+(3, 4) in every language.
 
 ## Hosting
 

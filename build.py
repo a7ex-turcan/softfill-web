@@ -56,6 +56,7 @@ PARTIAL_OVERRIDES = {
     "store_cta_small": "store_cta_small_live" if APP_LIVE else "store_cta_small_soon",
     "app_meta": "app_meta_live" if APP_LIVE else "nothing",
     "lang_switcher": "lang_switcher" if len(LANGS) > 1 else "nothing",
+    "devices_phone_badge": "nothing" if IPHONE_SHIPPED else "devices_phone_badge",
 }
 # A `{{ key }}` for one of these keys reads the first string when the flag is set, else the second.
 STRING_SWITCHES = [
