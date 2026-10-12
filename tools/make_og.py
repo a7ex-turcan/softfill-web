@@ -2,7 +2,8 @@
 """Renders the Open Graph image for every language into src/assets/img/og/ with headless Chrome.
 
 Run it after the hero strings change: python3 tools/make_og.py. Uses only the site's own fonts and brand
-files; nothing is fetched from the network.
+files, and the finished Sunny Meadow from tools/art (tools/art/build.sh og-art renders it into the
+git-ignored tools/art/out/); nothing is fetched from the network.
 """
 import html
 import json
@@ -36,14 +37,16 @@ body {{
 .lockup img.icon {{ width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 0 0 1px rgba(28,31,37,.1), 0 8px 24px rgba(28,31,37,.12); }}
 .lockup img.wordmark {{ height: 38px; }}
 .tag {{ margin-top: 6px; font-size: 22px; font-weight: 700; color: #5A5E65; }}
-h1 {{ margin: 0; font-size: 84px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; max-width: 1000px; text-wrap: balance; }}
-.note {{ font-size: 26px; font-weight: 700; color: #5A5E65; }}
-.band {{ position: absolute; right: -120px; bottom: -160px; width: 520px; height: 520px; border-radius: 50%;
-  background: conic-gradient(from 200deg, #FFEBD2, #DCF7E1, #D6F4FF, #F5E8FF, #FFEBD2); opacity: .9; }}
+h1 {{ margin: 0; font-size: 70px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; max-width: 560px; text-wrap: balance; hyphens: auto; }}
+.note {{ font-size: 24px; font-weight: 700; color: #5A5E65; max-width: 560px; }}
+.art {{ position: absolute; right: 64px; top: 50%; width: 470px; aspect-ratio: 3 / 2; margin-top: -157px;
+  border-radius: 22px; overflow: hidden; background: #fff; transform: rotate(-2deg);
+  box-shadow: 0 0 0 1px rgba(28,31,37,.06), 0 2px 6px rgba(28,31,37,.08), 0 24px 56px rgba(28,31,37,.18); }}
+.art img {{ width: 100%; height: 100%; display: block; }}
 </style>
 </head>
 <body>
-<div class="band"></div>
+<div class="art"><img src="{art}" alt=""></div>
 <div class="card">
   <div class="lockup">
     <img class="icon" src="{brand}/AppIcon-light.svg" alt="">
@@ -65,13 +68,17 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     fonts = (ROOT / "src" / "assets" / "fonts").as_uri()
     brand = (ROOT / "src" / "assets" / "img" / "brand").as_uri()
+    art_path = ROOT / "tools" / "art" / "out" / "og-meadow-960.jpg"
+    if not art_path.exists():
+        sys.exit("missing tools/art/out/og-meadow-960.jpg: run tools/art/build.sh og-art first")
+    art = art_path.as_uri()
     for lang in LANGS:
         path = ROOT / "src" / "strings" / f"{lang}.json"
         if not path.exists():
             print(f"{lang}: no strings yet, skipped", file=sys.stderr)
             continue
         strings = json.loads(path.read_text(encoding="utf-8"))
-        page = PAGE.format(lang=lang, w=WIDTH, h=HEIGHT, fonts=fonts, brand=brand,
+        page = PAGE.format(lang=lang, w=WIDTH, h=HEIGHT, fonts=fonts, brand=brand, art=art,
                            tagline=html.escape(strings["hero_tagline"]), title=html.escape(strings["hero_title"]),
                            note=html.escape(strings["hero_note"]))
         with tempfile.TemporaryDirectory() as tmp:

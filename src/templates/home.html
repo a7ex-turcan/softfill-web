@@ -19,4 +19,297 @@
       <p class="hero-note">{{ hero_note }}</p>
     </div>
   </div>
+
+  <div class="hero-visual">
+    <div class="ipad">
+      <div class="ipad-screen" role="img" aria-label="{{ hero_device_label }}">
+        <div class="cv-top">
+          <span class="cv-round">{{> icon/chevron-left }}</span>
+          <span class="cv-title">
+            <span class="cv-name">{{ device_drawing_name }}</span>
+            <span class="cv-progress"><span class="cv-track"><span class="cv-bar"></span></span><span class="cv-count">{{ device_progress }}</span></span>
+          </span>
+          <span class="cv-switch">
+            <span class="cv-seg is-on">{{> icon/fill }}{{ device_fill }}</span>
+            <span class="cv-seg">{{> icon/brush }}{{ device_draw }}</span>
+          </span>
+          <span class="cv-round">{{> icon/more }}</span>
+        </div>
+        <div class="cv-rail">
+          <span class="cv-tool is-on">{{> icon/fill }}</span>
+          <span class="cv-tool">{{> icon/eraser }}</span>
+          <span class="cv-rule"></span>
+          <span class="cv-tool">{{> icon/hash }}</span>
+          <span class="cv-tool">{{> icon/focus }}</span>
+          <span class="cv-tool">{{> icon/undo }}</span>
+          <span class="cv-tool is-off">{{> icon/redo }}</span>
+        </div>
+        <div class="cv-paper">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif 768w, /assets/img/home/hero-poster-1152.avif 1152w" sizes="(max-width: 700px) 70vw, 560px">
+            <img src="/assets/img/home/hero-poster-1152.jpg" srcset="/assets/img/home/hero-poster-768.jpg 768w, /assets/img/home/hero-poster-1152.jpg 1152w" sizes="(max-width: 700px) 70vw, 560px" alt="" width="1152" height="768" fetchpriority="high">
+          </picture>
+          <video class="cv-video" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1">
+            <source src="/assets/video/hero-768.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (max-width: 700px)">
+            <source src="/assets/video/hero-1152.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (min-width: 700.02px)">
+          </video>
+        </div>
+        <div class="cv-dock">
+          <span class="cv-swatch" style="--c:#DDEFF5"></span>
+          <span class="cv-swatch is-on" style="--c:#8CC56B"></span>
+          <span class="cv-swatch" style="--c:#B9A3DD"></span>
+          <span class="cv-swatch" style="--c:#F2668B"></span>
+          <span class="cv-swatch" style="--c:#F3CF8F"></span>
+          <span class="cv-swatch" style="--c:#4E7A45"></span>
+          <span class="cv-rule"></span>
+          <span class="cv-any">{{> icon/plus }}</span>
+          <span class="cv-palette">{{ device_palette }}{{> icon/chevron }}</span>
+        </div>
+      </div>
+    </div>
+    <button class="motion-toggle" type="button" data-hero-toggle hidden>
+      <span class="motion-pause">{{> icon/pause }}{{ hero_pause }}</span>
+      <span class="motion-play">{{> icon/play }}{{ hero_play }}</span>
+    </button>
+  </div>
+</section>
+
+<section class="section section-surface" id="how-it-works" aria-labelledby="how-title">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 id="how-title">{{ how_title }}</h2>
+      <p class="section-lede">{{ how_lede }}</p>
+    </div>
+    <div class="how-grid">
+      <article class="how-card">
+        <div class="how-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/tap-540.avif">
+            <img src="/assets/img/home/tap-540.jpg" alt="{{ how_tap_alt }}" width="540" height="360" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="how-text">
+          <h3>{{ how_tap_title }}</h3>
+          <p>{{ how_tap_text }}</p>
+        </div>
+      </article>
+      <article class="how-card">
+        <div class="how-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/draw-690.avif">
+            <img src="/assets/img/home/draw-690.jpg" alt="{{ how_draw_alt }}" width="690" height="460" loading="lazy" decoding="async">
+          </picture>
+          <span class="paper-chip">{{> icon/select }}{{ how_draw_chip }}</span>
+        </div>
+        <div class="how-text">
+          <h3>{{ how_draw_title }}</h3>
+          <p>{{ how_draw_text }}</p>
+        </div>
+      </article>
+      <article class="how-card">
+        <div class="how-art timelapse" data-timelapse>
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/timelapse-poster-768.avif">
+            <img src="/assets/img/home/timelapse-poster-768.jpg" alt="{{ how_timelapse_alt }}" width="768" height="512" loading="lazy" decoding="async">
+          </picture>
+          <video class="tl-video" muted playsinline preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1" data-timelapse-video>
+            <source src="/assets/video/timelapse-768.mp4" type="video/mp4">
+          </video>
+          <button class="tl-play" type="button" data-timelapse-play hidden>{{> icon/play }}<span class="visually-hidden">{{ timelapse_play }}</span></button>
+          <div class="tl-bar" aria-hidden="true">
+            <span data-timelapse-time>0:06</span>
+            <span class="tl-track"><span class="tl-fill" data-timelapse-fill></span></span>
+            <span>0:06</span>
+          </div>
+        </div>
+        <div class="how-text">
+          <h3>{{ how_timelapse_title }}</h3>
+          <p>{{ how_timelapse_text }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="levels" aria-labelledby="levels-title">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 id="levels-title">{{ levels_title }}</h2>
+      <p class="section-lede">{{ levels_lede }}</p>
+    </div>
+    <div class="level-grid">
+      <article class="level-card level-little">
+        <div class="level-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/level-little-600.avif">
+            <img src="/assets/img/home/level-little-600.jpg" alt="{{ level_little_alt }}" width="600" height="400" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="level-text">
+          <h3><span class="level-dot" aria-hidden="true"></span>{{ level_little_name }}</h3>
+          <p>{{ level_little_text }}</p>
+        </div>
+      </article>
+      <article class="level-card level-easy">
+        <div class="level-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/level-easy-600.avif">
+            <img src="/assets/img/home/level-easy-600.jpg" alt="{{ level_easy_alt }}" width="600" height="400" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="level-text">
+          <h3><span class="level-dot" aria-hidden="true"></span>{{ level_easy_name }}</h3>
+          <p>{{ level_easy_text }}</p>
+        </div>
+      </article>
+      <article class="level-card level-detailed">
+        <div class="level-art level-art-soon">
+          <span class="level-soon">{{ level_soon }}</span>
+        </div>
+        <div class="level-text">
+          <h3><span class="level-dot" aria-hidden="true"></span>{{ level_detailed_name }}</h3>
+          <p>{{ level_detailed_text }}</p>
+        </div>
+      </article>
+      <article class="level-card level-intricate">
+        <div class="level-art level-art-soon">
+          <span class="level-soon">{{ level_soon }}</span>
+        </div>
+        <div class="level-text">
+          <h3><span class="level-dot" aria-hidden="true"></span>{{ level_intricate_name }}</h3>
+          <p>{{ level_intricate_text }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="parents-section" id="parents" aria-labelledby="parents-title">
+  <div class="parents">
+    <div class="parents-copy">
+      <div class="parents-head">
+        <p class="chip chip-little">{{ parents_chip }}</p>
+        <h2 id="parents-title">{{ parents_title }}</h2>
+        <p class="section-lede">{{ parents_lede }}</p>
+      </div>
+      <div class="parents-points">
+        <div class="point">
+          <span class="point-icon">{{> icon/lock }}</span>
+          <h3>{{ parents_gate_title }}</h3>
+          <p>{{ parents_gate_text }}</p>
+        </div>
+        <div class="point">
+          <span class="point-icon">{{> icon/child }}</span>
+          <h3>{{ parents_little_title }}</h3>
+          <p>{{ parents_little_text }}</p>
+        </div>
+        <div class="point">
+          <span class="point-icon">{{> icon/no-account }}</span>
+          <h3>{{ parents_accounts_title }}</h3>
+          <p>{{ parents_accounts_text }}</p>
+        </div>
+        <div class="point">
+          <span class="point-icon">{{> icon/leaf }}</span>
+          <h3>{{ parents_calm_title }}</h3>
+          <p>{{ parents_calm_text }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="gate-wrap">
+      <div class="gate" role="img" aria-label="{{ gate_label }}">
+        <span class="gate-icon">{{> icon/family }}</span>
+        <span class="gate-heading">
+          <span class="gate-title">{{ gate_title }}</span>
+          <span class="gate-subtitle">{{ gate_subtitle }}</span>
+        </span>
+        <span class="gate-prompt">{{ gate_prompt_html }}</span>
+        <span class="gate-digits"><span>3</span><span>4</span><span class="is-active"></span></span>
+        <span class="gate-keys">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="is-blank"></span><span>0</span><span>{{> icon/backspace }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing" aria-labelledby="pricing-title">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 id="pricing-title">{{ pricing_title }}</h2>
+      <p class="section-lede">{{ pricing_lede }}</p>
+    </div>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-icon price-icon-easy">{{> icon/palette }}</span>
+        <h3>{{ pricing_free_title }}</h3>
+        <p>{{ pricing_free_text }}</p>
+      </article>
+      <article class="price-card">
+        <span class="price-icon price-icon-detailed">{{> icon/stack }}</span>
+        <h3>{{ pricing_packs_title }}</h3>
+        <p>{{ pricing_packs_text }}</p>
+      </article>
+      <article class="price-card price-card-ink">
+        <div class="price-card-top">
+          <span class="price-icon price-icon-ink">{{> icon/infinity }}</span>
+          <span class="price-tag">{{ pricing_unlimited_tag }}</span>
+        </div>
+        <h3>{{ pricing_unlimited_title }}</h3>
+        <p>{{ pricing_unlimited_text }}</p>
+      </article>
+    </div>
+    <p class="fine-print">{{ pricing_fine }}</p>
+  </div>
+</section>
+
+<section class="section section-surface" id="devices" aria-labelledby="devices-title">
+  <div class="devices">
+    <div class="devices-copy">
+      <h2 id="devices-title">{{ devices_title }}</h2>
+      <p class="section-lede">{{ devices_text }}</p>
+    </div>
+    <div class="devices-visual">
+      <div class="devices-stage">
+        <div class="mini-ipad">
+          <div class="mini-ipad-screen" role="img" aria-label="{{ devices_ipad_label }}">
+            <span class="mini-head"><span class="cv-round">{{> icon/chevron-left }}</span><span class="mini-name">{{ device_drawing_name }}</span></span>
+            <span class="mini-paper">
+              <picture>
+                <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif">
+                <img src="/assets/img/home/hero-poster-768.jpg" alt="" width="768" height="512" loading="lazy" decoding="async">
+              </picture>
+            </span>
+          </div>
+        </div>
+        <div class="mini-iphone">
+          {{> devices_phone_badge }}
+          <div class="mini-iphone-frame">
+            <div class="mini-iphone-screen" role="img" aria-label="{{ devices_iphone_label }}">
+              <span class="mini-island"></span>
+              <span class="mini-phone-head"><span class="cv-round">{{> icon/chevron-left }}</span><span class="mini-name">{{ device_drawing_name }}</span></span>
+              <span class="mini-phone-paper">
+                <picture>
+                  <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif">
+                  <img src="/assets/img/home/hero-poster-768.jpg" alt="" width="768" height="512" loading="lazy" decoding="async">
+                </picture>
+              </span>
+              <span class="mini-sheet">
+                <span class="mini-swatches">
+                  <span style="--c:#DDEFF5"></span><span style="--c:#8CC56B" class="is-on"></span><span style="--c:#B9A3DD"></span><span style="--c:#F2668B"></span><span style="--c:#F3CF8F"></span><span style="--c:#4E7A45"></span>
+                </span>
+                <span class="mini-bar"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="cta-title">
+  <img class="app-icon" src="/assets/img/brand/AppIcon-light.svg" alt="" width="96" height="96" loading="lazy">
+  <h2 id="cta-title">{{ cta_title }}</h2>
+  <p>{{ cta_text }}</p>
+  {{> store_cta }}
 </section>

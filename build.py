@@ -56,6 +56,7 @@ PARTIAL_OVERRIDES = {
     "store_cta_small": "store_cta_small_live" if APP_LIVE else "store_cta_small_soon",
     "app_meta": "app_meta_live" if APP_LIVE else "nothing",
     "lang_switcher": "lang_switcher" if len(LANGS) > 1 else "nothing",
+    "devices_phone_badge": "nothing" if IPHONE_SHIPPED else "devices_phone_badge",
 }
 # A `{{ key }}` for one of these keys reads the first string when the flag is set, else the second.
 STRING_SWITCHES = [
@@ -102,6 +103,12 @@ def load_strings(allow_missing):
         raise BuildError("\n".join(problems))
     for gap in gaps:
         print(gap, file=sys.stderr)
+    # " · " joins two parts of a line ("Big shapes, bright colors · ages 3+"); a no-break space before the dot
+    # keeps it from starting a line. Added here so the strings files stay plain for translators.
+    for table in strings.values():
+        for key, value in table.items():
+            if isinstance(value, str):
+                table[key] = value.replace(" · ", "\u00a0· ")
     return strings
 
 
