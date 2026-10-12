@@ -303,9 +303,16 @@ no-break space before the dot so it never starts a line. The parental gate mock'
 - Cloudflare access: the official Cloudflare MCP server (`https://mcp.cloudflare.com/mcp`) is installed in
   Alex's local Claude Code config for this project and signed in as his account. DNS changes still need his
   go-ahead first, like any outward-facing change.
-- **Email**: the zone has no MX records, so mail to `softfill@nutrx-labs.com` (on Support, Privacy, Terms and
-  every footer, and the app's Contact link) can't be delivered. It has Brevo's sending records (DKIM, DMARC)
-  only. Open until Alex picks how to receive it, for example Cloudflare Email Routing forwarding to his inbox.
+- **Email** (set up 2026-10-12 with Alex's go-ahead): Cloudflare Email Routing receives mail for
+  `nutrx-labs.com`. One rule forwards `softfill@nutrx-labs.com` to `alex.turcan@outlook.com`, the Cloudflare
+  account's own address, so it needed no verification. The catch-all stays off, so other addresses bounce.
+  Enabling it added three MX records (`route1`–`route3.mx.cloudflare.net`), an SPF record
+  (`v=spf1 include:_spf.mx.cloudflare.net ~all`) and a `cf2024-1._domainkey` DKIM key. Cloudflare locks them;
+  change mail routing in Email Routing, not in DNS. Brevo's sending records are untouched.
+  - If mail is ever sent *as* `@nutrx-labs.com` through another service, add its `include:` to that SPF
+    record, or it soft-fails.
+  - Replies go out from the Outlook address, not `softfill@`. Answering as `softfill@` needs a sending
+    service (Brevo is set up for the domain already).
 - Recommended once DNS works: verify `nutrx-labs.com` for the account (GitHub settings, Pages, "Add a
   domain", a TXT record at Cloudflare), so no other GitHub account can claim a subdomain of it.
 - Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first. All three
