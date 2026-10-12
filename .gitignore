@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Python (build.py)
+__pycache__/
+*.pyc
+
+# Screenshots taken while checking pages (headless Chrome writes them next to the repo root)
+/*.png
+/screenshots/

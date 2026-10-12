@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Softfill — calm coloring for iPad</title>
+<meta name="description" content="Softfill is a calm coloring app. Tap to fill, or draw with a brush that stays inside the lines. Hand-picked palettes for every drawing and a time-lapse of every finished piece.">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+html,body{margin:0}
+body{background:#FBFAF7;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:3px solid #47B7F1;outline-offset:3px}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:var(--bg,#FBFAF7);color:var(--ink,#1C1F25);font-family:ui-rounded,'SF Pro Rounded','Nunito',system-ui,sans-serif;font-weight:500">
+
+  <header style="position:sticky;top:0;z-index:30;background:var(--hdr,rgba(251,250,247,.86));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line,#E3E1DD)">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px);height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <a href="#top" aria-label="Softfill home" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <img src="brand/icon/AppIcon-light-1024.png" alt="" style="width:34px;height:34px;border-radius:8px;display:block;flex-shrink:0;box-shadow:0 0 0 1px rgba(28,31,37,.1)">
+        <img src="brand/wordmark/softfill-wordmark-ink.svg" alt="Softfill" style="height:22px;width:auto;display:var(--wm-ink,block)"><img src="brand/wordmark/softfill-wordmark-light.svg" alt="Softfill" style="height:22px;width:auto;display:var(--wm-light,none)">
+      </a>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div ref="{{ menuRef }}" style="position:relative">
+          <button onClick="{{ toggleMenu }}" aria-haspopup="true" aria-expanded="{{ menuExpanded }}" aria-label="Language" style="height:40px;padding:0 8px 0 10px;border-radius:999px;border:0;background:var(--surface2,#F5F3F0);color:var(--ink,#1C1F25);display:flex;align-items:center;gap:4px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer">
+            <span style="font-family:'Material Symbols Rounded';font-size:19px;font-weight:400">language</span>{{ langCode }}<span style="font-family:'Material Symbols Rounded';font-size:19px;font-weight:400">expand_more</span>
+          </button>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div role="menu" style="position:absolute;right:0;top:48px;width:208px;background:var(--surface,#FFFFFF);border-radius:20px;padding:6px;box-shadow:0 0 0 1px var(--line,#E3E1DD),0 2px 6px rgba(28,31,37,.08),0 20px 48px rgba(28,31,37,.16);display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+                <a role="menuitem" href="{{ l.href }}" hreflang="{{ l.code }}" lang="{{ l.code }}" onClick="{{ l.pick }}" style="{{ l.style }}">
+                  <span style="flex:1">{{ l.name }}</span>
+                  <span style="font-size:12px;font-weight:800;color:var(--ink2,#5A5E65)">{{ l.short }}</span>
+                  <span style="font-family:'Material Symbols Rounded';font-size:20px;width:20px;font-weight:500">{{ l.check }}</span>
+                </a>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ appLive }}" hint-placeholder-val="{{ false }}">
+          <a href="https://apps.apple.com/app/id6820982967" aria-label="{{ badgeAria }}" style="height:40px;padding:0 12px;border-radius:9px;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;line-height:1.05;box-shadow:inset 0 0 0 1px #A6A6A6;text-decoration:none">
+            <span style="font-size:9px;font-weight:600;white-space:nowrap">{{ badgeTop }}</span><span style="font-size:15px;font-weight:700;letter-spacing:-0.01em">App Store</span>
+          </a>
+        </sc-if>
+        <sc-if value="{{ appSoon }}" hint-placeholder-val="{{ true }}">
+          <div style="height:40px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);display:flex;align-items:center;font-size:14px;font-weight:800;white-space:nowrap">{{ soonShort }}</div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section aria-labelledby="hero-title" style="max-width:1280px;margin:0 auto;padding:clamp(36px,6vw,80px) clamp(20px,4vw,40px) clamp(64px,9vw,120px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(40px,5vw,72px)">
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <img src="brand/icon/AppIcon-light-1024.png" alt="" style="width:60px;height:60px;border-radius:13px;display:block;flex-shrink:0;box-shadow:0 0 0 1px rgba(28,31,37,.1),0 6px 18px rgba(28,31,37,.1)">
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <img src="brand/wordmark/softfill-wordmark-ink.svg" alt="Softfill" style="height:26px;width:auto;align-self:flex-start;display:var(--wm-ink,block)"><img src="brand/wordmark/softfill-wordmark-light.svg" alt="Softfill" style="height:26px;width:auto;align-self:flex-start;display:var(--wm-light,none)">
+            <div style="font-size:15px;font-weight:700;color:var(--ink2,#5A5E65)">{{ tagline }}</div>
+          </div>
+        </div>
+        <sc-if value="{{ isEn }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <h1 id="hero-title" style="margin:0;font-size:clamp(44px,5.6vw,80px);font-weight:800;letter-spacing:-0.035em;line-height:1;text-wrap:balance">Calm coloring, one tap at a time.</h1>
+            <p style="margin:0;font-size:clamp(18px,1.5vw,21px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:540px">Tap an area and watch the color ripple in, or pick up a brush that stays inside the lines. Every drawing comes with hand-picked palettes, so it always looks lovely.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isDe }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <h1 id="hero-title" lang="de" style="margin:0;font-size:clamp(44px,5.6vw,80px);font-weight:800;letter-spacing:-0.035em;line-height:1;text-wrap:balance;hyphens:auto">Ganz entspannt ausmalen, Tipp für Tipp.</h1>
+            <p lang="de" style="margin:0;font-size:clamp(18px,1.5vw,21px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:540px">Tippe auf eine Fläche und sieh zu, wie die Farbe hineinfließt – oder nimm den Pinsel, der in den Linien bleibt. Zu jedem Bild gibt es ausgewählte Farbpaletten, damit es immer schön aussieht.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isRo }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <h1 id="hero-title" lang="ro" style="margin:0;font-size:clamp(44px,5.6vw,80px);font-weight:800;letter-spacing:-0.035em;line-height:1;text-wrap:balance">Colorat în liniște, o atingere pe rând.</h1>
+            <p lang="ro" style="margin:0;font-size:clamp(18px,1.5vw,21px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:540px">Atinge o zonă și privește cum culoarea se revarsă, sau ia pensula care rămâne între linii. Fiecare desen vine cu palete alese cu grijă, ca să arate mereu frumos.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isRu }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <h1 id="hero-title" lang="ru" style="margin:0;font-size:clamp(44px,5.6vw,80px);font-weight:800;letter-spacing:-0.035em;line-height:1;text-wrap:balance;hyphens:auto">Спокойное раскрашивание, касание за касанием.</h1>
+            <p lang="ru" style="margin:0;font-size:clamp(18px,1.5vw,21px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:540px">Коснитесь области — и цвет мягко разольётся по ней. Или возьмите кисть, которая не выходит за линии. К каждому рисунку подобраны палитры, поэтому результат всегда выглядит красиво.</p>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px">
+          <sc-if value="{{ appLive }}" hint-placeholder-val="{{ false }}">
+            <a href="https://apps.apple.com/app/id6820982967" aria-label="{{ badgeAria }}" style="height:56px;padding:0 20px;border-radius:12px;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;line-height:1.05;box-shadow:inset 0 0 0 1px #A6A6A6;text-decoration:none">
+              <span style="font-size:12px;font-weight:600;white-space:nowrap">{{ badgeTop }}</span><span style="font-size:22px;font-weight:700;letter-spacing:-0.015em">App Store</span>
+            </a>
+          </sc-if>
+          <sc-if value="{{ appSoon }}" hint-placeholder-val="{{ true }}">
+            <div style="height:56px;padding:0 20px 0 16px;border-radius:14px;background:var(--surface,#FFFFFF);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800">
+              <span style="font-family:'Material Symbols Rounded';font-size:22px;font-weight:400;color:var(--ink2,#5A5E65)">schedule</span>{{ soonLong }}
+            </div>
+          </sc-if>
+          <div style="font-size:15px;font-weight:700;color:var(--ink2,#5A5E65)">{{ heroNote }}</div>
+        </div>
+      </div>
+
+      <div style="flex:1.45 1 520px;min-width:0">
+        <div style="background:#0E0F11;border-radius:clamp(20px,3vw,40px);padding:clamp(8px,1.2vw,15px);box-shadow:0 0 0 1px rgba(0,0,0,.08),0 40px 80px -24px rgba(28,31,37,.4)">
+          <div role="img" aria-label="Softfill on iPad: a meadow drawing being colored with tap to fill" style="container-type:inline-size;aspect-ratio:4/3;border-radius:clamp(12px,1.9vw,26px);overflow:hidden;background:var(--stage,#F0EEEA);position:relative">
+            <div style="position:absolute;left:2.4cqw;right:2.4cqw;top:2.2cqw;height:6cqw;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:1.6cqw">
+              <div style="width:6cqw;height:6cqw;border-radius:50%;background:var(--surface,#FFFFFF);display:grid;place-items:center;box-shadow:0 1px 3px rgba(28,31,37,.08)"><span style="font-family:'Material Symbols Rounded';font-size:3.4cqw">chevron_left</span></div>
+              <div style="display:flex;flex-direction:column;gap:0.7cqw;min-width:0">
+                <div style="font-size:2.2cqw;font-weight:800;letter-spacing:-0.01em">Sunny Meadow</div>
+                <div style="display:flex;align-items:center;gap:1.2cqw">
+                  <div style="width:14cqw;height:0.8cqw;border-radius:1cqw;background:var(--line,#E3E1DD);overflow:hidden"><div style="height:100%;width:{{ heroPct }};background:var(--ink,#1C1F25);border-radius:1cqw;transition:width .4s"></div></div>
+                  <div style="font-size:1.45cqw;font-weight:700;color:var(--ink2,#5A5E65);white-space:nowrap">{{ heroProg }} of {{ heroTotal }} colored</div>
+                </div>
+              </div>
+              <div style="display:flex;padding:0.4cqw;border-radius:1.6cqw;background:var(--surface,#FFFFFF);box-shadow:0 1px 3px rgba(28,31,37,.08);gap:0.3cqw">
+                <div style="height:4.4cqw;padding:0 1.6cqw 0 1.2cqw;border-radius:1.2cqw;background:var(--ink,#1C1F25);color:var(--onink,#FBFAF7);display:flex;align-items:center;gap:0.6cqw;font-size:1.6cqw;font-weight:800"><span style="font-family:'Material Symbols Rounded';font-size:2.3cqw">format_color_fill</span>Fill</div>
+                <div style="height:4.4cqw;padding:0 1.6cqw 0 1.2cqw;border-radius:1.2cqw;color:var(--ink2,#5A5E65);display:flex;align-items:center;gap:0.6cqw;font-size:1.6cqw;font-weight:800"><span style="font-family:'Material Symbols Rounded';font-size:2.3cqw">brush</span>Draw</div>
+              </div>
+              <div style="width:6cqw;height:6cqw;border-radius:50%;background:var(--surface,#FFFFFF);display:grid;place-items:center;box-shadow:0 1px 3px rgba(28,31,37,.08)"><span style="font-family:'Material Symbols Rounded';font-size:3cqw">more_horiz</span></div>
+            </div>
+            <div style="position:absolute;left:2.4cqw;top:17cqw;width:7cqw;box-sizing:border-box;padding:0.8cqw;border-radius:2.2cqw;background:var(--surface,#FFFFFF);box-shadow:0 1px 3px rgba(28,31,37,.08),0 6px 18px rgba(28,31,37,.06);display:flex;flex-direction:column;align-items:center;gap:0.5cqw">
+              <div style="width:5.4cqw;height:5.4cqw;border-radius:1.6cqw;background:var(--ink,#1C1F25);color:var(--onink,#FBFAF7);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">format_color_fill</span></div>
+              <div style="width:5.4cqw;height:5.4cqw;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">ink_eraser</span></div>
+              <div style="width:4cqw;height:0.15cqw;background:var(--line,#E3E1DD);margin:0.4cqw 0"></div>
+              <div style="width:5.4cqw;height:5.4cqw;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">pin</span></div>
+              <div style="width:5.4cqw;height:5.4cqw;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">center_focus_weak</span></div>
+              <div style="width:5.4cqw;height:5.4cqw;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">undo</span></div>
+              <div style="width:5.4cqw;height:5.4cqw;display:grid;place-items:center;color:var(--ink3,#9A9DA3)"><span style="font-family:'Material Symbols Rounded';font-size:2.7cqw">redo</span></div>
+            </div>
+            <div style="position:absolute;left:13cqw;top:11.5cqw;width:72cqw;aspect-ratio:3/2;border-radius:1.6cqw;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(28,31,37,.08),0 8px 24px rgba(28,31,37,.08)">
+              <canvas ref="{{ heroRef }}" style="width:100%;height:100%;display:block;transition:opacity .6s"></canvas>
+            </div>
+            <div style="position:absolute;left:49cqw;bottom:2.6cqw;transform:translateX(-50%);width:max-content;padding:1.2cqw 1.6cqw;border-radius:2.6cqw;background:var(--surface,#FFFFFF);box-shadow:0 1px 3px rgba(28,31,37,.08),0 6px 18px rgba(28,31,37,.07);display:flex;align-items:center;gap:1.1cqw">
+              <sc-for list="{{ heroSwatches }}" as="s" hint-placeholder-count="6"><div style="{{ s.style }}"></div></sc-for>
+              <div style="width:0.15cqw;height:3.6cqw;background:var(--line,#E3E1DD)"></div>
+              <div style="width:4.6cqw;height:4.6cqw;border-radius:50%;background:conic-gradient(#F4C95D,#EE8B6A,#CDB4DB,#47B7F1,#6A994E,#F4C95D);display:grid;place-items:center;flex-shrink:0"><div style="width:2.6cqw;height:2.6cqw;border-radius:50%;background:var(--surface,#FFFFFF);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:2cqw">add</div></div>
+              <div style="display:flex;align-items:center;gap:0.3cqw;padding-left:0.6cqw;font-size:1.5cqw;font-weight:800;color:var(--ink2,#5A5E65);white-space:nowrap">Golden meadow<span style="font-family:'Material Symbols Rounded';font-size:2.2cqw">expand_more</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" aria-labelledby="how-title" style="padding:clamp(56px,8vw,112px) clamp(20px,4vw,40px);background:var(--surface,#FFFFFF);box-shadow:0 -1px 0 var(--line,#E3E1DD),0 1px 0 var(--line,#E3E1DD)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)">
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+          <h2 id="how-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">Tap. Draw. Watch it come together.</h2>
+          <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:620px">Switch between filling and drawing at any time, on the same drawing. Every fill comes with a soft sound and a gentle tap, so coloring feels as good as it looks.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
+          <div style="border-radius:28px;background:var(--bg,#FBFAF7);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);padding:12px;display:flex;flex-direction:column;gap:4px">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff;position:relative;box-shadow:0 0 0 1px rgba(28,31,37,.06)"><canvas ref="{{ s1Ref }}" role="img" aria-label="Color rippling into the sun after a tap" style="width:100%;height:100%;display:block"></canvas></div>
+            <div style="padding:16px 12px 12px;display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em">Tap to fill</h3>
+              <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Tap an area and the color ripples out from your finger. Missed the spot? Undo is always one tap away.</p>
+            </div>
+          </div>
+          <div style="border-radius:28px;background:var(--bg,#FBFAF7);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);padding:12px;display:flex;flex-direction:column;gap:4px">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff;position:relative;box-shadow:0 0 0 1px rgba(28,31,37,.06)">
+              <canvas ref="{{ s2Ref }}" role="img" aria-label="Brush strokes that stay inside the lines" style="width:100%;height:100%;display:block"></canvas>
+              <div style="position:absolute;left:12px;top:12px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#DCF7E1;color:#0B5D2A;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:800;box-shadow:0 1px 3px rgba(28,31,37,.1)"><span style="font-family:'Material Symbols Rounded';font-size:18px">select</span>Inside lines</div>
+            </div>
+            <div style="padding:16px 12px 12px;display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em">Draw if you like</h3>
+              <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Pick up the brush with your finger or Apple Pencil. It can stay inside the lines, and the line art always stays crisp on top.</p>
+            </div>
+          </div>
+          <div style="border-radius:28px;background:var(--bg,#FBFAF7);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);padding:12px;display:flex;flex-direction:column;gap:4px">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff;position:relative;box-shadow:0 0 0 1px rgba(28,31,37,.06)">
+              <canvas ref="{{ s3Ref }}" role="img" aria-label="A finished drawing with its time-lapse" style="width:100%;height:100%;display:block"></canvas>
+              <sc-if value="{{ showPlay }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ playTimelapse }}" aria-label="Play time-lapse" style="position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:0;background:#1C1F25;color:#FBFAF7;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px rgba(28,31,37,.3)"><span style="font-family:'Material Symbols Rounded';font-size:34px;font-variation-settings:'FILL' 1">play_arrow</span></button>
+              </sc-if>
+              <div style="position:absolute;left:12px;right:12px;bottom:12px;height:32px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.92);color:#1C1F25;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;box-shadow:0 1px 3px rgba(28,31,37,.1)">
+                <span>{{ tlTime }}</span>
+                <div style="flex:1;height:5px;border-radius:3px;background:#E3E1DD;overflow:hidden"><div style="height:100%;width:{{ tlPct }};background:#1C1F25"></div></div>
+                <span>0:06</span>
+              </div>
+            </div>
+            <div style="padding:16px 12px 12px;display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em">Watch the time-lapse</h3>
+              <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Finished pieces go to your Gallery with a replay of every tap and stroke. Press play to see one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="levels" aria-labelledby="levels-title" style="padding:clamp(56px,8vw,112px) clamp(20px,4vw,40px)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)">
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+          <h2 id="levels-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">Four levels, from little hands to steady ones.</h2>
+          <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:620px">Start wherever feels right. Each level has its own themed packs, from big friendly shapes to mandalas with hundreds of tiny areas.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:20px">
+          <div style="border-radius:28px;background:var(--l-tint,#FFEBD2);padding:12px;display:flex;flex-direction:column">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff"><image-slot id="web-level-little" placeholder="Little drawing, colored (e.g. Sunny Days)" shape="rounded" radius="20"></image-slot></div>
+            <div style="padding:18px 10px 10px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:12px;height:12px;border-radius:50%;background:var(--l-fill,#DF9B44)"></div><h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em;color:var(--l-deep,#7E4600)">Little artists</h3></div>
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.45;color:var(--l-deep,#7E4600)">Big shapes, bright colors · ages 3+</p>
+            </div>
+          </div>
+          <div style="border-radius:28px;background:var(--e-tint,#DCF7E1);padding:12px;display:flex;flex-direction:column">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff"><canvas ref="{{ easyRef }}" role="img" aria-label="Sunny Meadow, colored" style="width:100%;height:100%;display:block"></canvas></div>
+            <div style="padding:18px 10px 10px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:12px;height:12px;border-radius:50%;background:var(--e-fill,#69C27E)"></div><h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em;color:var(--e-deep,#0B5D2A)">Easy</h3></div>
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.45;color:var(--e-deep,#0B5D2A)">Relaxed scenes · 10–15 min each</p>
+            </div>
+          </div>
+          <div style="border-radius:28px;background:var(--d-tint,#D6F4FF);padding:12px;display:flex;flex-direction:column">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff"><image-slot id="web-level-detailed" placeholder="Detailed drawing, colored" shape="rounded" radius="20"></image-slot></div>
+            <div style="padding:18px 10px 10px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:12px;height:12px;border-radius:50%;background:var(--d-fill,#47B7F1)"></div><h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em;color:var(--d-deep,#005D8D)">Detailed</h3></div>
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.45;color:var(--d-deep,#005D8D)">More regions, finer lines · 20–40 min</p>
+            </div>
+          </div>
+          <div style="border-radius:28px;background:var(--i-tint,#F5E8FF);padding:12px;display:flex;flex-direction:column">
+            <div style="aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#fff"><image-slot id="web-level-intricate" placeholder="Intricate mandala, colored" shape="rounded" radius="20"></image-slot></div>
+            <div style="padding:18px 10px 10px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:12px;height:12px;border-radius:50%;background:var(--i-fill,#BE95EC)"></div><h3 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.015em;color:var(--i-deep,#663E8E)">Intricate</h3></div>
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.45;color:var(--i-deep,#663E8E)">Mandalas &amp; patterns · an hour or more</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="parents" aria-labelledby="parents-title" style="padding:0 clamp(20px,4vw,40px)">
+      <div style="max-width:1200px;margin:0 auto;box-sizing:border-box;border-radius:clamp(28px,4vw,40px);background:var(--surface2,#F5F3F0);padding:clamp(28px,5vw,64px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(36px,5vw,64px)">
+        <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:32px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="align-self:flex-start;height:30px;padding:0 12px;border-radius:999px;background:var(--l-tint,#FFEBD2);color:var(--l-deep,#7E4600);display:flex;align-items:center;font-size:13px;font-weight:800">For parents</div>
+            <h2 id="parents-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">A grown-up stays in charge.</h2>
+            <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:560px">Softfill is rated 4+. Children can color on their own, while anything that costs money or leaves the app waits for you.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:24px 28px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="width:40px;height:40px;border-radius:12px;background:var(--surface,#FFFFFF);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' 1">lock</span></div>
+              <h3 style="margin:0;font-size:18px;font-weight:800">A grown-up check, every time</h3>
+              <p style="margin:0;font-size:16px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Purchases, settings and links out of the app ask a grown-up first, every time.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="width:40px;height:40px;border-radius:12px;background:var(--surface,#FFFFFF);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' 1">child_care</span></div>
+              <h3 style="margin:0;font-size:18px;font-weight:800">Made for little artists</h3>
+              <p style="margin:0;font-size:16px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Big shapes and bright colors for ages 3+. No prices, and nothing to tap away to.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="width:40px;height:40px;border-radius:12px;background:var(--surface,#FFFFFF);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' 1">no_accounts</span></div>
+              <h3 style="margin:0;font-size:18px;font-weight:800">No accounts</h3>
+              <sc-if value="{{ shipped }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:16px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Nothing to sign up for. Your art stays on your device and in your own iCloud.</p></sc-if><sc-if value="{{ notShipped }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-size:16px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Nothing to sign up for. Your art stays on your device, and soon in your own iCloud too.</p></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="width:40px;height:40px;border-radius:12px;background:var(--surface,#FFFFFF);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' 1">spa</span></div>
+              <h3 style="margin:0;font-size:18px;font-weight:800">Calm by design</h3>
+              <p style="margin:0;font-size:16px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">No countdowns, no scores. Color at your own pace.</p>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 1 380px;min-width:0;margin:0 auto">
+          <div role="img" aria-label="The parental gate: type three hundred forty-seven as a number" style="background:var(--surface,#FFFFFF);border-radius:28px;padding:28px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;box-shadow:0 2px 6px rgba(28,31,37,.06),0 20px 48px rgba(28,31,37,.12)">
+            <div style="width:52px;height:52px;border-radius:16px;background:var(--l-tint,#FFEBD2);color:var(--l-deep,#7E4600);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:28px;font-variation-settings:'FILL' 1">family_restroom</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:24px;font-weight:800;letter-spacing:-0.015em">Grown-ups only</div>
+              <div style="font-size:14px;font-weight:600;color:var(--ink2,#5A5E65)">Asked every time — keeps little fingers out.</div>
+            </div>
+            <div style="font-size:17px;font-weight:600;line-height:1.4;text-wrap:balance">Type <span style="font-weight:900">three hundred forty-seven</span> as a number</div>
+            <div style="display:flex;gap:10px">
+              <div style="width:52px;height:60px;border-radius:14px;background:var(--surface2,#F5F3F0);display:grid;place-items:center;font-size:26px;font-weight:800">3</div>
+              <div style="width:52px;height:60px;border-radius:14px;background:var(--surface2,#F5F3F0);display:grid;place-items:center;font-size:26px;font-weight:800">4</div>
+              <div style="width:52px;height:60px;border-radius:14px;background:var(--surface2,#F5F3F0);box-shadow:inset 0 0 0 2px var(--ink,#1C1F25)"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,64px);gap:8px">
+              <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12"><div style="{{ k.style }}">{{ k.label }}</div></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" aria-labelledby="pricing-title" style="padding:clamp(56px,8vw,112px) clamp(20px,4vw,40px)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)">
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+          <h2 id="pricing-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">Free to start. Unlock what you love.</h2>
+          <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:620px">The free packs have no time limit. When you want more drawings, you choose how.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
+          <div style="border-radius:28px;background:var(--surface,#FFFFFF);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);padding:28px;display:flex;flex-direction:column;gap:12px">
+            <div style="width:44px;height:44px;border-radius:14px;background:var(--e-tint,#DCF7E1);color:var(--e-deep,#0B5D2A);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;font-variation-settings:'FILL' 1">palette</span></div>
+            <h3 style="margin:8px 0 0;font-size:24px;font-weight:800;letter-spacing:-0.015em">Free packs</h3>
+            <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Start with free packs to color for as long as you like. No trial clock, no catch.</p>
+          </div>
+          <div style="border-radius:28px;background:var(--surface,#FFFFFF);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);padding:28px;display:flex;flex-direction:column;gap:12px">
+            <div style="width:44px;height:44px;border-radius:14px;background:var(--d-tint,#D6F4FF);color:var(--d-deep,#005D8D);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;font-variation-settings:'FILL' 1">collections_bookmark</span></div>
+            <h3 style="margin:8px 0 0;font-size:24px;font-weight:800;letter-spacing:-0.015em">Packs to keep</h3>
+            <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--ink2,#5A5E65);text-wrap:pretty">Unlock a single pack once and it’s yours forever. Every paid pack has one drawing you can try for free first.</p>
+          </div>
+          <div style="border-radius:28px;background:var(--ink,#1C1F25);color:var(--onink,#FBFAF7);padding:28px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="width:44px;height:44px;border-radius:14px;background:var(--inkraised,#2E323A);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:26px">all_inclusive</span></div>
+              <div style="height:28px;padding:0 10px;border-radius:999px;background:#DCF7E1;color:#0B5D2A;display:flex;align-items:center;font-size:13px;font-weight:800">7 days free</div>
+            </div>
+            <h3 style="margin:8px 0 0;font-size:24px;font-weight:800;letter-spacing:-0.015em">Softfill Unlimited</h3>
+            <p style="margin:0;font-size:16.5px;line-height:1.5;color:var(--oninkmuted,#C9C7C1);text-wrap:pretty">Every pack, with new ones every month. Pay monthly or yearly, and share it with your family through Family Sharing.</p>
+          </div>
+        </div>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--ink2,#5A5E65);max-width:760px;text-wrap:pretty">The App Store shows the exact prices for your country. Subscriptions renew automatically until you cancel them in your Apple Account settings. Single packs aren’t shared through Family Sharing.</p>
+      </div>
+    </section>
+
+    <section id="devices" aria-labelledby="devices-title" style="padding:clamp(56px,8vw,112px) clamp(20px,4vw,40px);background:var(--surface,#FFFFFF);box-shadow:0 -1px 0 var(--line,#E3E1DD),0 1px 0 var(--line,#E3E1DD)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:clamp(40px,5vw,72px)">
+        <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <sc-if value="{{ shipped }}" hint-placeholder-val="{{ false }}">
+            <h2 id="devices-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">On iPad and iPhone, always in sync.</h2>
+            <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:520px">Start a drawing on your iPad and finish it on your iPhone. Your art syncs through your own iCloud, so there’s no account to make and nobody else can see it.</p>
+          </sc-if>
+          <sc-if value="{{ notShipped }}" hint-placeholder-val="{{ true }}">
+            <h2 id="devices-title" style="margin:0;font-size:clamp(34px,4.2vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.04;text-wrap:balance">Made for iPad. Coming to iPhone.</h2>
+            <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65);text-wrap:pretty;max-width:520px">Softfill is designed for the big screen first. iPhone and iCloud sync are on the way, so your art will follow you through your own iCloud, with no account to make.</p>
+          </sc-if>
+        </div>
+        <div style="flex:1.3 1 460px;min-width:0">
+          <div style="position:relative;aspect-ratio:16/11">
+            <div style="position:absolute;left:0;top:0;width:80%;background:#0E0F11;border-radius:clamp(16px,2.4vw,30px);padding:clamp(6px,1vw,12px);box-shadow:0 30px 60px -20px rgba(28,31,37,.35)">
+              <div role="img" aria-label="The same drawing on iPad" style="container-type:inline-size;aspect-ratio:4/3;border-radius:clamp(10px,1.5vw,20px);overflow:hidden;background:var(--stage,#F0EEEA);position:relative">
+                <div style="position:absolute;left:3cqw;top:3cqw;display:flex;align-items:center;gap:2cqw">
+                  <div style="width:6.5cqw;height:6.5cqw;border-radius:50%;background:var(--surface,#FFFFFF);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:3.6cqw">chevron_left</span></div>
+                  <div style="font-size:2.6cqw;font-weight:800">Sunny Meadow</div>
+                </div>
+                <div style="position:absolute;left:9cqw;right:9cqw;top:14cqw;aspect-ratio:3/2;border-radius:1.8cqw;overflow:hidden;background:#fff;box-shadow:0 8px 24px rgba(28,31,37,.08)"><canvas ref="{{ dIpadRef }}" style="width:100%;height:100%;display:block"></canvas></div>
+              </div>
+            </div>
+            <div style="position:absolute;right:0;bottom:0;width:27%">
+              <sc-if value="{{ notShipped }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;left:50%;top:-44px;transform:translateX(-50%);height:30px;padding:0 12px;border-radius:999px;background:var(--ink,#1C1F25);color:var(--onink,#FBFAF7);display:flex;align-items:center;font-size:13px;font-weight:800;white-space:nowrap;z-index:2">Coming soon</div>
+              </sc-if>
+              <div style="background:#0E0F11;border-radius:clamp(18px,2.6vw,34px);padding:clamp(4px,0.6vw,8px);box-shadow:0 30px 60px -20px rgba(28,31,37,.4),0 0 0 2px var(--surface,#FFFFFF)">
+                <div role="img" aria-label="The same drawing on iPhone" style="container-type:inline-size;aspect-ratio:393/852;border-radius:clamp(14px,2.1vw,28px);overflow:hidden;background:var(--stage,#F0EEEA);position:relative">
+                  <div style="position:absolute;left:50%;top:3.2cqw;width:30cqw;height:8.6cqw;margin-left:-15cqw;border-radius:6cqw;background:#000"></div>
+                  <div style="position:absolute;left:5cqw;right:5cqw;top:18cqw;display:flex;align-items:center;gap:3cqw">
+                    <div style="width:11cqw;height:11cqw;border-radius:50%;background:var(--surface,#FFFFFF);display:grid;place-items:center;flex-shrink:0"><span style="font-family:'Material Symbols Rounded';font-size:6cqw">chevron_left</span></div>
+                    <div style="font-size:5cqw;font-weight:800;white-space:nowrap">Sunny Meadow</div>
+                  </div>
+                  <div style="position:absolute;left:3cqw;right:3cqw;top:72cqw;aspect-ratio:3/2;border-radius:3cqw;overflow:hidden;background:#fff;box-shadow:0 4px 12px rgba(28,31,37,.08)"><canvas ref="{{ dPhoneRef }}" style="width:100%;height:100%;display:block"></canvas></div>
+                  <div style="position:absolute;left:0;right:0;bottom:0;padding:5cqw 5cqw 9cqw;border-radius:8cqw 8cqw 0 0;background:var(--surface,#FFFFFF);display:flex;flex-direction:column;gap:4cqw">
+                    <div style="display:flex;justify-content:space-between">
+                      <sc-for list="{{ phoneSwatches }}" as="s" hint-placeholder-count="6"><div style="{{ s.style }}"></div></sc-for>
+                    </div>
+                    <div style="height:10cqw;border-radius:3cqw;background:var(--surface2,#F5F3F0)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta-title" style="padding:clamp(72px,10vw,140px) clamp(20px,4vw,40px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px">
+      <img src="brand/icon/AppIcon-light-1024.png" alt="" style="width:96px;height:96px;border-radius:21px;display:block;flex-shrink:0;box-shadow:0 0 0 1px rgba(28,31,37,.1),0 12px 32px rgba(28,31,37,.14)">
+      <h2 id="cta-title" style="margin:8px 0 0;font-size:clamp(36px,4.8vw,64px);font-weight:800;letter-spacing:-0.035em;line-height:1.02;text-wrap:balance;max-width:760px">Your first drawing is waiting.</h2>
+      <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--ink2,#5A5E65)">Free packs to start. No account needed.</p>
+      <sc-if value="{{ appLive }}" hint-placeholder-val="{{ false }}">
+        <a href="https://apps.apple.com/app/id6820982967" aria-label="{{ badgeAria }}" style="height:56px;padding:0 20px;border-radius:12px;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;text-align:left;line-height:1.05;box-shadow:inset 0 0 0 1px #A6A6A6;text-decoration:none">
+          <span style="font-size:12px;font-weight:600;white-space:nowrap">{{ badgeTop }}</span><span style="font-size:22px;font-weight:700;letter-spacing:-0.015em">App Store</span>
+        </a>
+      </sc-if>
+      <sc-if value="{{ appSoon }}" hint-placeholder-val="{{ true }}">
+        <div style="height:56px;padding:0 20px 0 16px;border-radius:14px;background:var(--surface,#FFFFFF);box-shadow:inset 0 0 0 1px var(--line,#E3E1DD);display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;font-weight:400;color:var(--ink2,#5A5E65)">schedule</span>{{ soonLong }}
+        </div>
+      </sc-if>
+    </section>
+  </main>
+
+  <footer style="box-shadow:0 -1px 0 var(--line,#E3E1DD)">
+    <div style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,4vw,40px) 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="brand/icon/AppIcon-light-1024.png" alt="" style="width:28px;height:28px;border-radius:6px;display:block;flex-shrink:0;box-shadow:0 0 0 1px rgba(28,31,37,.1)">
+        <div style="font-size:15px;font-weight:700;color:var(--ink2,#5A5E65)">© 2026 nutrx labs</div>
+      </div>
+      <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;font-size:15px;font-weight:800">
+        <a href="privacy">Privacy</a>
+        <a href="terms">Terms</a>
+        <a href="support">Support</a>
+        <a href="mailto:softfill@nutrx-labs.com" style="font-weight:700;color:var(--ink2,#5A5E65)">softfill@nutrx-labs.com</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;de&quot;,&quot;ro&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;appLive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;iphoneShipped&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const W=1536,H=1024,MIN=500;
+const PAL=['#BFE3EE','#F4C95D','#B5D67A','#6A994E','#3F6E45','#EE8B6A'];
+const KC={sky:'#BFE3EE',sun:'#F4C95D',cloud:'#FFF7EA',trunk:'#B07A52',canopy:'#6A994E',pine:'#3F6E45',far:'#D3E7A6',hill:'#93BE5E',bush:'#3F6E45',meadow:'#B5D67A',blade:'#6A994E',petal:'#EE8B6A',petal2:'#F6A9BE',center:'#F4C95D'};
+const SLOT={sky:0,sun:1,center:1,meadow:2,far:2,hill:2,canopy:3,blade:3,pine:4,bush:4,petal:5,petal2:5};
+const MIDK=['sky','sun','cloud','trunk','canopy','pine','far','hill','bush'];
+const OD=['sky','cloud','sun','far','hill','bush','pine','canopy','trunk','meadow','blade','petal','petal2','center'];
+const LANGS=[['en','English','EN','./'],['de','Deutsch','DE','de/'],['ro','Română','RO','ro/'],['ru','Русский','RU','ru/']];
+const STR={en:{tag:'Coloring for iPad',note:'Free packs to start · No account needed',top:'Download on the',soon:'Coming soon to the App Store',short:'Coming soon'},
+ de:{tag:'Ausmalen auf dem iPad',note:'Kostenlose Pakete zum Start · Kein Konto nötig',top:'Laden im',soon:'Bald im App Store',short:'Demnächst'},
+ ro:{tag:'Colorat pe iPad',note:'Pachete gratuite pentru început · Fără cont',top:'Descarcă din',soon:'În curând în App Store',short:'În curând'},
+ ru:{tag:'Раскраски для iPad',note:'Бесплатные наборы для начала · Без аккаунта',top:'Загрузите в',soon:'Скоро в App Store',short:'Скоро'}};
+const acc=(h,dark)=>dark?{f:`oklch(0.78 0.13 ${h})`,t:`oklch(0.3 0.05 ${h})`,d:`oklch(0.85 0.09 ${h})`}:null;
+const THEME={light:{'--bg':'#FBFAF7','--surface':'#FFFFFF','--surface2':'#F5F3F0','--line':'#E3E1DD','--ink':'#1C1F25','--ink2':'#5A5E65','--ink3':'#9A9DA3','--onink':'#FBFAF7','--oninkmuted':'#C9C7C1','--inkraised':'#2E323A','--stage':'#F0EEEA','--hdr':'rgba(251,250,247,.86)','--wm-ink':'block','--wm-light':'none',
+  '--l-fill':'#DF9B44','--l-tint':'#FFEBD2','--l-deep':'#7E4600','--e-fill':'#69C27E','--e-tint':'#DCF7E1','--e-deep':'#0B5D2A','--d-fill':'#47B7F1','--d-tint':'#D6F4FF','--d-deep':'#005D8D','--i-fill':'#BE95EC','--i-tint':'#F5E8FF','--i-deep':'#663E8E'},
+ dark:{'--bg':'#101215','--surface':'#191C20','--surface2':'#24272B','--line':'#32363B','--ink':'#F3F2EF','--ink2':'#B0AEA8','--ink3':'#6B6F76','--onink':'#101215','--oninkmuted':'#4A4E55','--inkraised':'#DAD8D3','--stage':'#0B0D10','--hdr':'rgba(16,18,21,.86)','--wm-ink':'none','--wm-light':'block'}};
+[['l',70],['e',150],['d',235],['i',305]].forEach(([k,h])=>{const a=acc(h,true);THEME.dark[`--${k}-fill`]=a.f;THEME.dark[`--${k}-tint`]=a.t;THEME.dark[`--${k}-deep`]=a.d;});
+const rgb=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+const ease=t=>1-Math.pow(1-t,3);
+
+class Component extends DCLogic {
+  state={lang:'en',menu:false,w:1440,sysDark:false,prog:0,total:0,sel:0,playing:false,tl:0};
+  rootRef=React.createRef();menuRef=React.createRef();heroRef=React.createRef();s1Ref=React.createRef();s2Ref=React.createRef();s3Ref=React.createRef();easyRef=React.createRef();dIpadRef=React.createRef();dPhoneRef=React.createRef();
+  q(){return new URLSearchParams(location.search);}
+  componentDidMount(){
+    const q=this.q();this.alive=true;
+    const mq=window.matchMedia('(prefers-color-scheme: dark)');this.mqH=e=>this.setState({sysDark:e.matches});mq.addEventListener('change',this.mqH);this.mq=mq;
+    this.onResize=()=>this.setState({w:window.innerWidth});window.addEventListener('resize',this.onResize);
+    this.onDoc=e=>{if(this.state.menu&&this.menuRef.current&&!this.menuRef.current.contains(e.target))this.setState({menu:false});};document.addEventListener('pointerdown',this.onDoc);
+    this.onKey=e=>{if(e.key==='Escape'&&this.state.menu)this.setState({menu:false});};document.addEventListener('keydown',this.onKey);
+    this.setState({lang:q.get('lang')||this.props.lang||'en',menu:q.get('menu')==='1',w:window.innerWidth,sysDark:mq.matches});
+    this.still=q.get('still')==='1'||window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.applyTheme();
+    const img=new Image();img.onload=()=>{if(this.alive)this.build(img);};img.src='assets/meadow-lineart.png';
+  }
+  componentDidUpdate(){this.applyTheme();}
+  componentWillUnmount(){this.alive=false;clearTimeout(this.tmr);cancelAnimationFrame(this.raf);cancelAnimationFrame(this.tlRaf);this.mq&&this.mq.removeEventListener('change',this.mqH);window.removeEventListener('resize',this.onResize);document.removeEventListener('pointerdown',this.onDoc);document.removeEventListener('keydown',this.onKey);}
+  isDark(){const t=this.q().get('theme')||this.props.theme||'auto';return t==='dark'||(t==='auto'&&this.state.sysDark);}
+  applyTheme(){const el=this.rootRef.current;if(!el)return;const dark=this.isDark();const T=dark?{...THEME.light,...THEME.dark}:THEME.light;for(const k in T)el.style.setProperty(k,T[k]);document.body.style.background=T['--bg'];document.documentElement.lang=this.state.lang;document.documentElement.style.colorScheme=dark?'dark':'light';}
+
+  build(img){
+    const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d',{willReadFrequently:true});
+    x.fillStyle='#fff';x.fillRect(0,0,W,H);x.drawImage(img,0,0,W,H);
+    x.strokeStyle='#000';x.lineWidth=5;x.beginPath();x.moveTo(0,533);x.lineTo(104,533);x.stroke();
+    const d=x.getImageData(0,0,W,H).data,N=W*H,lab=new Int32Array(N);
+    for(let i=0;i<N;i++){const p=i*4;if(0.3*d[p]+0.59*d[p+1]+0.11*d[p+2]<170)lab[i]=-1;}
+    const regs=[null],st=new Int32Array(N);
+    for(let i=0;i<N;i++){if(lab[i]!==0)continue;const id=regs.length;let sp=0;st[sp++]=i;lab[i]=id;let a=0,sx=0,sy=0,x0=W,x1=0,y0=H,y1=0;
+      while(sp){const j=st[--sp],px=j%W,py=(j-px)/W;a++;sx+=px;sy+=py;if(px<x0)x0=px;if(px>x1)x1=px;if(py<y0)y0=py;if(py>y1)y1=py;
+        if(px>0&&lab[j-1]===0){lab[j-1]=id;st[sp++]=j-1;}if(px<W-1&&lab[j+1]===0){lab[j+1]=id;st[sp++]=j+1;}
+        if(py>0&&lab[j-W]===0){lab[j-W]=id;st[sp++]=j-W;}if(py<H-1&&lab[j+W]===0){lab[j+W]=id;st[sp++]=j+W;}}
+      regs.push({id,a,cx:sx/a,cy:sy/a,x0,x1,y0,y1});}
+    const own=new Int32Array(lab);
+    for(let pass=0;pass<3;pass++){const prev=new Int32Array(own);for(let i=0;i<N;i++){if(prev[i]>0)continue;const px=i%W;let v=0;
+      if(px>0&&prev[i-1]>0)v=prev[i-1];else if(px<W-1&&prev[i+1]>0)v=prev[i+1];else if(i>=W&&prev[i-W]>0)v=prev[i-W];else if(i<N-W&&prev[i+W]>0)v=prev[i+W];if(v)own[i]=v;}}
+    for(const r of regs){if(!r)continue;r.x0=Math.max(0,r.x0-3);r.y0=Math.max(0,r.y0-3);r.x1=Math.min(W-1,r.x1+3);r.y1=Math.min(H-1,r.y1+3);}
+    let pi=0;const fs=new Set([lab[480*W+40],lab[450*W+20],lab[510*W+30]]);
+    for(const r of regs){if(!r)continue;r.kind=fs.has(r.id)?'sky':this.kind(r);if(r.kind==='petal'&&(pi++%2))r.kind='petal2';r.color=KC[r.kind];}
+    this.lab=lab;this.own=own;this.regs=regs;this.img=img;
+    const counted=regs.filter(r=>r&&r.a>=MIN&&r.kind!=='cloud');
+    this.counted=counted;
+    const mid=new Set(regs.filter(r=>r&&MIDK.includes(r.kind)).map(r=>r.id));
+    counted.filter(r=>r.kind==='petal').forEach(r=>mid.add(r.id));
+    this.mid=mid;
+    const all=new Set(regs.filter(r=>r&&r.a>=40).map(r=>r.id));
+    this.midC=this.compose(mid);this.fullC=this.compose(all);
+    this.blit(this.easyRef,this.fullC,0,0,W,H,768,512);
+    this.blit(this.s3Ref,this.fullC,0,0,W,H,768,512);
+    const dev=new Set(mid);regs.forEach(r=>{if(r&&(r.kind==='meadow'||(r.kind==='blade'&&r.cx<W*0.5)||r.kind==='center'))dev.add(r.id);});
+    const devC=this.compose(dev);
+    this.blit(this.dIpadRef,devC,0,0,W,H,768,512);
+    this.blit(this.dPhoneRef,devC,0,0,W,H,768,512);
+    this.drawS1();this.drawS2();
+    this.seq=counted.filter(r=>!mid.has(r.id)).sort((a,b)=>OD.indexOf(a.kind)-OD.indexOf(b.kind)||a.cx-b.cx);
+    this.tlOrder=regs.filter(r=>r&&all.has(r.id)).sort((a,b)=>OD.indexOf(a.kind)-OD.indexOf(b.kind)||a.cx-b.cx);
+    this.startHero();
+  }
+  kind(r){const nx=r.cx/W,ny=r.cy/H,fa=r.a/N2,pw=r.x1-r.x0,ph=r.y1-r.y0,asp=ph/Math.max(pw,1);
+    if(fa>0.08&&r.y0<8&&nx>0.25)return 'sky';
+    if(r.x0<6&&nx<0.08&&ny>0.25&&ny<0.66&&fa<0.03&&asp<6)return 'sky';
+    if(nx>0.66&&nx<0.79&&ny>0.1&&ny<0.3&&fa<0.03)return 'sun';
+    if(ny<0.42&&nx>0.3)return 'cloud';
+    if(nx<0.33&&ny<0.62&&r.y1<H*0.7){if(fa<0.0035||(asp>2.2&&fa<0.02))return 'trunk';return 'canopy';}
+    if(nx>0.78&&ny>0.38&&ny<0.56&&fa<0.006)return 'pine';
+    if(fa>0.08&&ny>0.55)return 'meadow';
+    if(ny>=0.4&&ny<0.66&&r.y1<H*0.72){if(pw>W*0.3)return ny<0.55?'far':'hill';return 'bush';}
+    if(ny>0.55){if(r.y1>H-8||asp>1.35||fa>0.004)return 'blade';if(fa<0.0009)return 'center';return 'petal';}
+    return 'hill';}
+  compose(set,extra){
+    const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const im=x.createImageData(W,H),d=im.data,own=this.own,regs=this.regs;
+    const cols={};for(const id of set){cols[id]=rgb(regs[id].color);}
+    for(let i=0,p=0;i<own.length;i++,p+=4){const id=own[i];const cc=id>0?cols[id]:null;if(cc){d[p]=cc[0];d[p+1]=cc[1];d[p+2]=cc[2];}else{d[p]=d[p+1]=d[p+2]=255;}d[p+3]=255;}
+    x.putImageData(im,0,0);if(extra)extra(x);x.globalCompositeOperation='multiply';x.drawImage(this.img,0,0,W,H);x.globalCompositeOperation='source-over';return c;}
+  paintOnly(set){const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const im=x.createImageData(W,H),d=im.data,own=this.own,regs=this.regs,cols={};for(const id of set)cols[id]=rgb(regs[id].color);
+    for(let i=0,p=0;i<own.length;i++,p+=4){const id=own[i];const cc=id>0?cols[id]:null;if(cc){d[p]=cc[0];d[p+1]=cc[1];d[p+2]=cc[2];}else{d[p]=d[p+1]=d[p+2]=255;}d[p+3]=255;}x.putImageData(im,0,0);return c;}
+  regionCanvas(r,color){const w=r.x1-r.x0+1,h=r.y1-r.y0+1,c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d'),im=x.createImageData(w,h),d=im.data,[R,G,B]=rgb(color||r.color),own=this.own;
+    for(let yy=0;yy<h;yy++){const row=(r.y0+yy)*W+r.x0;for(let xx=0;xx<w;xx++){if(own[row+xx]===r.id){const p=(yy*w+xx)*4;d[p]=R;d[p+1]=G;d[p+2]=B;d[p+3]=255;}}}x.putImageData(im,0,0);return c;}
+  blit(ref,src,sx,sy,sw,sh,cw,ch){const cv=ref.current;if(!cv)return;cv.width=cw;cv.height=ch;cv.getContext('2d').drawImage(src,sx,sy,sw,sh,0,0,cw,ch);}
+  touchPoint(r){const lab=this.lab;let best=null,bd=1e18;const step=Math.max(1,Math.floor(Math.min(r.x1-r.x0,r.y1-r.y0)/40));
+    for(let y=r.y0;y<=r.y1;y+=step)for(let x=r.x0;x<=r.x1;x+=step){if(lab[y*W+x]!==r.id)continue;const dd=(x-r.cx)**2+(y-r.cy)**2;if(dd<bd){bd=dd;best=[x,y];}}
+    if(!best)return[r.cx,r.cy];
+    if(r.kind==='meadow'||r.kind==='sky'){for(let y=Math.round(r.cy);y<=r.y1;y+=4){const x=Math.round(r.cx);if(lab[y*W+x]===r.id)return[x,y];}}
+    return best;}
+  drawS1(){const sun=this.regs.find(r=>r&&r.kind==='sun');const set=new Set(this.regs.filter(r=>r&&['sky','cloud'].includes(r.kind)).map(r=>r.id));
+    const c=this.compose(set,x=>{if(!sun)return;const rc=this.regionCanvas(sun);const tx=sun.cx-30,ty=sun.cy+28;const rad=Math.hypot(sun.x1-sun.x0,sun.y1-sun.y0)*0.5;
+      x.save();x.beginPath();x.arc(tx,ty,rad,0,Math.PI*2);x.clip();x.drawImage(rc,sun.x0,sun.y0);x.restore();
+      x.strokeStyle='rgba(28,31,37,.55)';x.lineWidth=5;x.beginPath();x.arc(tx,ty,30,0,Math.PI*2);x.stroke();x.fillStyle='rgba(28,31,37,.18)';x.beginPath();x.arc(tx,ty,16,0,Math.PI*2);x.fill();});
+    this.blit(this.s1Ref,c,840,0,540,360,810,540);}
+  drawS2(){const mead=this.regs.find(r=>r&&r.kind==='meadow');const set=new Set(this.regs.filter(r=>r&&r.a>=40&&!['meadow','blade','center','petal','petal2'].includes(r.kind)).map(r=>r.id));
+    this.regs.filter(r=>r&&['petal','center'].includes(r.kind)&&r.cx<W*0.6).forEach(r=>set.add(r.id));
+    const c=this.compose(set,x=>{if(!mead)return;const t=document.createElement('canvas');t.width=W;t.height=H;const tx=t.getContext('2d');tx.lineCap='round';tx.lineJoin='round';
+      const strokes=[[PAL[2],34,[[430,700],[560,672],[690,700],[820,676],[900,700]]],[PAL[2],34,[[400,760],[540,738],[680,770],[800,744],[940,770]]],[PAL[2],30,[[470,830],[600,806],[720,836],[860,812]]],['#93BE5E',22,[[520,890],[640,872],[760,900],[880,880]]]];
+      for(const[col,w,pts] of strokes){tx.strokeStyle=col;tx.lineWidth=w;tx.beginPath();tx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length-1;i++){const mx=(pts[i][0]+pts[i+1][0])/2,my=(pts[i][1]+pts[i+1][1])/2;tx.quadraticCurveTo(pts[i][0],pts[i][1],mx,my);}const l=pts[pts.length-1];tx.lineTo(l[0],l[1]);tx.stroke();}
+      tx.globalCompositeOperation='destination-in';tx.drawImage(this.regionCanvas(mead,'#000000'),mead.x0,mead.y0);x.drawImage(t,0,0);});
+    this.blit(this.s2Ref,c,200,560,690,460,828,552);}
+
+  startHero(){const cv=this.heroRef.current;if(!cv)return;cv.width=W;cv.height=H;this.hx=cv.getContext('2d');
+    this.base=this.paintOnly(this.mid);this.bx=this.base.getContext('2d');this.si=0;this.drawHero();
+    const midCount=this.counted.filter(r=>this.mid.has(r.id)).length;this.midCount=midCount;
+    this.setState({prog:midCount,total:this.counted.length});
+    if(this.still){const r=this.seq[0];if(r){const rc=this.regionCanvas(r),[tx,ty]=this.touchPoint(r);this.setState({sel:SLOT[r.kind]??-1});
+      this.drawHero(x=>{x.save();x.beginPath();x.arc(tx,ty,Math.hypot(r.x1-r.x0,r.y1-r.y0)*0.36,0,Math.PI*2);x.clip();x.drawImage(rc,r.x0,r.y0);x.restore();x.strokeStyle='rgba(28,31,37,.4)';x.lineWidth=5;x.beginPath();x.arc(tx,ty,34,0,Math.PI*2);x.stroke();x.fillStyle='rgba(28,31,37,.16)';x.beginPath();x.arc(tx,ty,18,0,Math.PI*2);x.fill();});}}
+    else this.tmr=setTimeout(()=>this.nextFill(),1400);}
+  drawHero(over){const x=this.hx;x.globalCompositeOperation='source-over';x.drawImage(this.base,0,0);if(over)over(x);x.globalCompositeOperation='multiply';x.drawImage(this.img,0,0,W,H);x.globalCompositeOperation='source-over';}
+  nextFill(){if(!this.alive)return;if(this.si>=this.seq.length){this.tmr=setTimeout(()=>this.resetHero(),2600);return;}
+    const r=this.seq[this.si++],rc=this.regionCanvas(r),[tx,ty]=this.touchPoint(r);
+    const rad=Math.max(Math.hypot(tx-r.x0,ty-r.y0),Math.hypot(tx-r.x1,ty-r.y0),Math.hypot(tx-r.x0,ty-r.y1),Math.hypot(tx-r.x1,ty-r.y1));
+    const dur=r.a>40000?900:600,t0=performance.now();this.setState({sel:SLOT[r.kind]??-1});
+    const step=now=>{if(!this.alive)return;const t=Math.min(1,(now-t0)/dur),e=ease(t);
+      this.drawHero(x=>{x.save();x.beginPath();x.arc(tx,ty,Math.max(1,rad*e),0,Math.PI*2);x.clip();x.drawImage(rc,r.x0,r.y0);x.restore();
+        const ra=Math.min(1,(now-t0)/450);if(ra<1){x.strokeStyle=`rgba(28,31,37,${0.5*(1-ra)})`;x.lineWidth=5;x.beginPath();x.arc(tx,ty,18+34*ra,0,Math.PI*2);x.stroke();}});
+      if(t<1||(now-t0)<450){this.raf=requestAnimationFrame(step);return;}
+      this.bx.drawImage(rc,r.x0,r.y0);this.drawHero();this.setState({prog:this.midCount+this.si});
+      this.tmr=setTimeout(()=>this.nextFill(),r.a>40000?1100:650);};
+    this.raf=requestAnimationFrame(step);}
+  resetHero(){const cv=this.heroRef.current;if(!cv||!this.alive)return;cv.style.opacity='0';
+    this.tmr=setTimeout(()=>{this.base=this.paintOnly(this.mid);this.bx=this.base.getContext('2d');this.si=0;this.drawHero();this.setState({prog:this.midCount});cv.style.opacity='1';this.tmr=setTimeout(()=>this.nextFill(),1400);},650);}
+  playTimelapse(){const cv=this.s3Ref.current;if(!cv||!this.tlOrder||this.state.playing)return;const x=cv.getContext('2d'),order=this.tlOrder,dur=this.still?600:5200,t0=performance.now();
+    const paint=document.createElement('canvas');paint.width=W;paint.height=H;const px=paint.getContext('2d');px.fillStyle='#fff';px.fillRect(0,0,W,H);let done=0;
+    this.setState({playing:true,tl:0});
+    const frame=now=>{if(!this.alive)return;const t=Math.min(1,(now-t0)/dur),want=Math.floor(t*order.length);
+      while(done<want){const r=order[done++];px.drawImage(this.regionCanvas(r),r.x0,r.y0);}
+      x.globalCompositeOperation='source-over';x.drawImage(paint,0,0,W,H,0,0,cv.width,cv.height);x.globalCompositeOperation='multiply';x.drawImage(this.img,0,0,cv.width,cv.height);x.globalCompositeOperation='source-over';
+      this.setState({tl:t});if(t<1){this.tlRaf=requestAnimationFrame(frame);return;}
+      setTimeout(()=>{if(this.alive)this.setState({playing:false});},900);};
+    this.tlRaf=requestAnimationFrame(frame);}
+
+  renderVals(){
+    const s=this.state,lang=STR[s.lang]?s.lang:'en',L=STR[lang],live=this.props.appLive??false,shipped=this.props.iphoneShipped??false,narrow=s.w<560;
+    const ring='0 0 0 0.35cqw var(--surface,#FFFFFF),0 0 0 0.75cqw var(--ink,#1C1F25)';
+    const heroSwatches=PAL.map((c,i)=>({style:{width:'4.6cqw',height:'4.6cqw',borderRadius:'50%',background:c,flexShrink:0,transform:i===s.sel?'scale(1.1)':'none',boxShadow:i===s.sel?ring:'inset 0 0 0 1px rgba(0,0,0,.06)',transition:'transform .2s, box-shadow .2s'}}));
+    const phoneSwatches=PAL.map((c,i)=>({style:{width:'11cqw',height:'11cqw',borderRadius:'50%',background:c,boxShadow:i===2?'0 0 0 0.8cqw var(--surface,#FFFFFF),0 0 0 1.6cqw var(--ink,#1C1F25)':'inset 0 0 0 1px rgba(0,0,0,.06)'}}));
+    const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>({label:k,style:{height:48,borderRadius:14,display:'grid',placeItems:'center',fontSize:20,fontWeight:700,boxShadow:k?'inset 0 0 0 1px var(--line,#E3E1DD)':'none',fontFamily:k==='⌫'?'system-ui':'inherit'}}));
+    const langs=LANGS.map(([code,name,short,href])=>{const on=code===lang;return{code,name,short,href,check:on?'check':'',
+      pick:e=>{e.preventDefault();this.setState({lang:code,menu:false});},
+      style:{height:44,padding:'0 10px 0 14px',borderRadius:14,display:'flex',alignItems:'center',gap:10,fontSize:16,fontWeight:on?800:600,color:'var(--ink,#1C1F25)',background:on?'var(--surface2,#F5F3F0)':'transparent',textDecoration:'none'}};});
+    const sec=Math.round(s.tl*6);
+    return{rootRef:this.rootRef,menuRef:this.menuRef,heroRef:this.heroRef,s1Ref:this.s1Ref,s2Ref:this.s2Ref,s3Ref:this.s3Ref,easyRef:this.easyRef,dIpadRef:this.dIpadRef,dPhoneRef:this.dPhoneRef,
+      isEn:lang==='en',isDe:lang==='de',isRo:lang==='ro',isRu:lang==='ru',tagline:L.tag,heroNote:L.note,badgeTop:L.top,soonLong:L.soon,soonShort:narrow?L.short:L.soon,badgeAria:L.top+' App Store',
+      appLive:live,appSoon:!live,shipped,notShipped:!shipped,
+      langCode:LANGS.find(l=>l[0]===lang)[2],menuOpen:s.menu,menuExpanded:s.menu?'true':'false',toggleMenu:()=>this.setState(p=>({menu:!p.menu})),langs,
+      heroProg:s.prog,heroTotal:s.total||'—',heroPct:s.total?Math.round(s.prog/s.total*100)+'%':'40%',heroSwatches,phoneSwatches,keys,
+      showPlay:!s.playing,playTimelapse:()=>this.playTimelapse(),tlPct:Math.round((s.playing?s.tl:1)*100)+'%',tlTime:'0:0'+(s.playing?sec:6)};
+  }
+}
+const N2=W*H;
+</script>
+</body>
+</html>
