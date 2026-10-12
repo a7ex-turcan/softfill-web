@@ -271,7 +271,9 @@ def write_sitemap(out_dir):
 
 
 def write_site_files(out_dir):
-    (out_dir / "CNAME").write_text(DOMAIN + "\n", encoding="utf-8")
+    # No trailing newline: that is how GitHub writes the file when the custom domain is saved in the Pages
+    # settings, which commits a CNAME of its own to main. Matching it keeps build.py --check quiet afterwards.
+    (out_dir / "CNAME").write_text(DOMAIN, encoding="utf-8")
     (out_dir / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
     (out_dir / ".nojekyll").write_text("", encoding="utf-8")
     write_sitemap(out_dir)

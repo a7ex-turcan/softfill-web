@@ -290,9 +290,16 @@ no-break space before the dot so it never starts a line. The parental gate mock'
   through Cloudflare before the certificate exists blocks it. Once `https://softfill.nutrx-labs.com` answers
   with GitHub's certificate, enforce HTTPS:
   `gh api -X PUT repos/a7ex-turcan/softfill-web/pages -F https_enforced=true`.
-- Status 2026-10-12: the `softfill` CNAME exists (created by Claude through the Cloudflare MCP server, DNS only,
-  with a comment saying why), resolves publicly, and GitHub's health check passes. The site answers over
-  HTTP; GitHub's certificate for the domain was still pending, so HTTPS isn't enforced yet.
+- Status 2026-10-12: **live at https://softfill.nutrx-labs.com.** The `softfill` CNAME exists (created by Claude
+  through the Cloudflare MCP server, DNS only, with a comment saying why) and resolves publicly. GitHub's
+  Let's Encrypt certificate covers the domain (it renews it automatically), and HTTPS is enforced, so plain
+  HTTP redirects to HTTPS.
+- Keep the record **DNS only** for good, not just until the first certificate: GitHub renews the certificate by
+  reaching the domain directly, and a static site gains nothing from Cloudflare's proxy.
+- If the certificate ever stalls (the Pages API shows no `https_certificate` long after DNS resolves), remove
+  and re-add the custom domain, as GitHub's docs say. Through the API: `PUT …/pages` with `"cname": null`, then
+  with the domain again. GitHub then commits "Delete CNAME" and "Create CNAME" to `main` itself; that is
+  expected. It writes the file without a trailing newline, and so does `build.py`, so `--check` stays green.
 - Cloudflare access: the official Cloudflare MCP server (`https://mcp.cloudflare.com/mcp`) is installed in
   Alex's local Claude Code config for this project and signed in as his account. DNS changes still need his
   go-ahead first, like any outward-facing change.
