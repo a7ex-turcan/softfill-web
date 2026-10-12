@@ -280,7 +280,7 @@ no-break space before the dot so it never starts a line. The parental gate mock'
   folder `/docs`. No GitHub Actions; the committed `docs/` is what gets served, and `docs/.nojekyll` turns
   Jekyll off. Check a build with `gh api repos/a7ex-turcan/softfill-web/pages/builds/latest`.
 - `docs/CNAME` contains `softfill.nutrx-labs.com`; the build writes it, so it survives every rebuild, and Pages
-  read the custom domain from it. So `a7ex-turcan.github.io/softfill-web/` redirects to the domain, and the
+  reads the custom domain from it. So `a7ex-turcan.github.io/softfill-web/` redirects to the domain, and the
   site can only be seen there (its links are root-relative too).
 - DNS at Cloudflare (nameservers `jeff` and `sonia.ns.cloudflare.com`): a CNAME record `softfill` →
   `a7ex-turcan.github.io`, **DNS only (grey cloud)** until GitHub has issued the HTTPS certificate. Proxying
