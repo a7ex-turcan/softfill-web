@@ -192,6 +192,7 @@ def page_context(page, lang, strings, css_url, js_url, article=None):
         "prefix": prefix,
         "home_url": url_for("home", lang),
         "canonical": SITE + (url_for(page, lang) if page in PAGES else "/404.html"),
+        "canonical_html": (f'<link rel="canonical" href="{SITE}{url_for(page, lang)}">' if page in PAGES else ""),
         "site_url": SITE,
         "og_locale": OG_LOCALES[lang],
         "og_image": f"{SITE}/assets/img/og/softfill-og-{lang}.png",
@@ -269,14 +270,26 @@ def write_site_files(out_dir):
 
 # --- checks -----------------------------------------------------------------------------------
 
-LOCAL_REF = re.compile(r'(?:href|src|srcset|poster|content)="(/[^"#?\s]*)(?:[?#][^"]*)?"')
+LOCAL_REF = re.compile(r'(?:href|src|poster)="(/[^"#?\s]*)(?:[?#][^"]*)?"')
+SRCSET = re.compile(r'srcset="([^"]*)"')
+
+
+def local_refs(text):
+    """Root-relative URLs in href, src and poster attributes, and every candidate of every srcset."""
+    refs = set(LOCAL_REF.findall(text))
+    for value in SRCSET.findall(text):
+        for candidate in value.split(","):
+            url = candidate.strip().split(" ")[0].split("?")[0].split("#")[0]
+            if url.startswith("/"):
+                refs.add(url)
+    return refs
 
 
 def check_links(out_dir):
     """Every root-relative href/src in the output must point at a file the build wrote."""
     problems = []
     for page in sorted(out_dir.rglob("*.html")):
-        for ref in set(LOCAL_REF.findall(page.read_text(encoding="utf-8"))):
+        for ref in local_refs(page.read_text(encoding="utf-8")):
             target = out_dir / ref.lstrip("/")
             if ref.endswith("/"):
                 target = target / "index.html"
@@ -337,9 +350,13 @@ def main():
                     raise BuildError("docs/ is stale; run python3 build.py and commit the result:\n  " + "\n  ".join(diffs))
             print("docs/ is up to date")
         else:
-            if OUT.exists():
-                shutil.rmtree(OUT)
-            build(OUT, args.allow_missing)
+            # Build next to docs/ and swap it in only on success, so a failed build leaves docs/ as it was.
+            with tempfile.TemporaryDirectory(dir=ROOT) as tmp:
+                fresh = Path(tmp) / "docs"
+                build(fresh, args.allow_missing)
+                if OUT.exists():
+                    shutil.rmtree(OUT)
+                fresh.rename(OUT)
             pages = sum(1 for _ in OUT.rglob("*.html"))
             print(f"built {pages} pages into {OUT.relative_to(ROOT)}/")
     except BuildError as error:

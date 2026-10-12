@@ -19,6 +19,7 @@ TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
 shoot() { # width height scheme url out
+  rm -f "$5"
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --no-first-run --force-device-scale-factor=1 \
     --blink-settings=preferredColorScheme=$3 --window-size=$1,$2 --virtual-time-budget=4000 \
     --screenshot="$5" "$4" >/dev/null 2>&1 || true

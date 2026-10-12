@@ -4,6 +4,7 @@
 Run it after the hero strings change: python3 tools/make_og.py. Uses only the site's own fonts and brand
 files; nothing is fetched from the network.
 """
+import html
 import json
 import subprocess
 import sys
@@ -71,7 +72,8 @@ def main():
             continue
         strings = json.loads(path.read_text(encoding="utf-8"))
         page = PAGE.format(lang=lang, w=WIDTH, h=HEIGHT, fonts=fonts, brand=brand,
-                           tagline=strings["hero_tagline"], title=strings["hero_title"], note=strings["hero_note"])
+                           tagline=html.escape(strings["hero_tagline"]), title=html.escape(strings["hero_title"]),
+                           note=html.escape(strings["hero_note"]))
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / f"og-{lang}.html"
             source.write_text(page, encoding="utf-8")
