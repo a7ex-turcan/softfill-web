@@ -4,10 +4,9 @@ The public site for **Softfill**, a native iOS coloring app by nutrx labs, at
 https://softfill.nutrx-labs.com. It is the app's marketing page and hosts the pages the app and App Store
 Connect link to: privacy policy, terms of use and support, in English, German, Romanian and Russian.
 
-**Status (2026-10-12):** repository set up. The Home design is approved and in `design_handoff_softfill_web/`;
-the brand assets are in `src/assets/img/brand/`. The build script, templates and strings come next, in this
-order: a placeholder Home so the domain resolves over HTTPS, then Privacy and Support in English (they gate
-the app's first external TestFlight build), then Home, Terms and 404, then the other three languages.
+**Status (2026-10-12):** the build is in place, and Privacy, Terms, Support and the 404 page are written in
+English. Home is a placeholder hero until the full approved design is built. German, Romanian and Russian
+follow the app's translation pass. GitHub Pages and the domain are not switched on yet.
 
 ## Build and preview
 
@@ -30,6 +29,8 @@ Change `src/` and rebuild; never edit `docs/` by hand. Commit `src/` and the reb
   Home, `copy-rules.md` the copy rules, `design/*.dc.html` references to open in a browser, never code to copy.
 - `src/templates/` page templates and partials, `src/strings/<lang>.json` every visible string per language,
   `src/articles/` the Privacy and Terms bodies, `src/assets/` self-hosted CSS, fonts, images, video and JS.
+- `tools/` holds helpers that write into `src/`: `make_og.py` renders the Open Graph images and
+  `screenshots.sh` captures pages at 390 and 1440 wide, light and dark, from the preview server.
 - `docs/` is the generated site that GitHub Pages serves.
 - The app lives in a separate repo, checked out next to this one at `../softfill`. It is the source of
   truth for every product fact; start sessions with `claude --add-dir ../softfill`.

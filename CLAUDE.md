@@ -13,6 +13,7 @@ src/templates/                 page templates and shared partials (see "Build")
 src/strings/                   one JSON file of UI strings per language: en, de, ro, ru
 src/articles/                  long-form bodies per language: privacy.en.html, terms.de.html, …
 src/assets/                    css/, fonts/ (self-hosted Nunito with its OFL licence), img/, video/, js/
+tools/                         helpers that write into src/: make_og.py (Open Graph images), screenshots.sh
 docs/                          the generated site that GitHub Pages serves; never edited by hand
 design_handoff_softfill_web/   the website design from Claude Design (read-only; regenerate from Claude
                                Design, don't hand-edit). README.md is the build spec for Home; copy-rules.md
@@ -89,11 +90,14 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   - Intricate — "Mandalas & patterns · an hour or more"
   - Studio (freehand pencil, marker, watercolor) is **v1.1**. Do not promise it on the site until it ships,
     even though the app's Unlimited copy mentions it.
-- **Content today**: Little has three free packs (Sunny Days, Under the Sea, Farm Friends); Easy has Meadow
-  Friends (free) and Seaside Towns (paid, "harbors, boats and beach huts"). The rule: Little has 3 free packs,
-  Easy, Detailed and Intricate 2 each, and every paid pack has one drawing that is free to try. Pack sizes and
-  the reasoning: `../softfill/PLAN.md`, Content track. On the site say "free packs in every level", not a
-  number. Current list: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
+- **Content today** (checked 2026-10-12): Little has three free packs (Sunny Days, Under the Sea, Farm
+  Friends); Easy has Meadow Friends and Into the Woods (free) and Seaside Towns (paid, "harbors, boats and beach
+  huts"). **Detailed and Intricate have no packs yet**: they wait on an art spike (`../softfill/PLAN.md`,
+  Content track, item 5). The rule: Little has 3 free packs, Easy, Detailed and Intricate 2 each, and every
+  paid pack has one drawing that is free to try. Pack sizes and the reasoning: `../softfill/PLAN.md`, Content
+  track. Never give a number of packs. Until Detailed and Intricate have their packs, say "free packs to start",
+  not "free packs in every level". Current list:
+  `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
 - **Pricing (internal reference only)**: packs $1.99 each, yours forever; Softfill Unlimited $2.99 a month
   or $19.99 a year with a 7-day free trial, every pack included, new packs monthly. Unlimited is shared
   through Family Sharing; packs are not.
@@ -113,10 +117,13 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   - Sell what stays true: the grown-up check every time, the Little level (no prices, nothing to tap away
     to), no accounts (device and the user's own iCloud), calm by design (no countdowns, no scores).
   - No exact prices, and nothing about Studio until v1.1 ships.
-- **Free drawing of the day** (app Phase 3): one locked drawing opens free for a day, then locks again,
-  with an opt-in daily notification. Describe it on the site only once it ships.
-- **Devices**: iPad first, iPhone supported. The iPhone layouts and iCloud sync land in the app's Phase 3;
-  until then describe them only as planned.
+- **Free drawing of the day**: built in the app on 2026-10-11 (Phase 3 item 5), so it is in the first
+  TestFlight build and Support, Terms and Privacy describe it. One drawing from a paid pack opens free until
+  local midnight, then locks again. Finished, it stays in the Gallery; unfinished, its colors are kept until
+  the pack is unlocked. An opt-in local reminder at 9:00 names the day's drawing. Hidden for Unlimited members.
+- **Devices**: iPad first, iPhone supported. iCloud sync is built (Phase 3 item 6, 2026-10-12, waiting on its
+  two-device check), so the pages describe it as part of the app. The iPhone layouts are not built yet
+  (Phase 3 item 7): describe iPhone only as planned ("Made for iPad. Coming to iPhone.").
 - **Languages**: English, German, Romanian, Russian.
 - **App Store**: app id `6820982967`, so the link will be `https://apps.apple.com/app/id6820982967`. Until
   the app is live, say "Coming soon to the App Store" instead of showing a badge that links nowhere. Once it
@@ -190,6 +197,13 @@ dependency tree, a slower first paint and GitHub Pages routing work for no gain.
   (links, emphasis) and is the only way markup gets in.
 - **Articles** (`src/articles/<page>.<lang>.html`): the Privacy and Terms bodies as plain HTML fragments,
   with their "last updated" date.
+- **Languages are published one at a time**: a language is built, listed in the switcher, in `hreflang` and in
+  the sitemap once `src/strings/<lang>.json` exists. Until a second language exists, the switcher and the
+  `hreflang` links are left out (an English page under `/de/` marked `lang="de"` would mislead browsers and
+  search engines alike).
+- **Product state** lives in two flags at the top of `build.py`: `APP_LIVE` (App Store badge and Smart App
+  Banner instead of "Coming soon") and `IPHONE_SHIPPED` (the Devices copy on Home). Flip them in the change that
+  updates the matching product fact here.
 - **`build.py`**: runs on the macOS system Python (3.9) with the standard library only. For every page and
   language it writes `docs/<lang-prefix><page>/index.html` (English at the root, `docs/de/…` and so on),
   plus `docs/404.html`, `docs/CNAME`, `docs/robots.txt` and `docs/sitemap.xml`, and copies `src/assets/`
@@ -200,6 +214,11 @@ dependency tree, a slower first paint and GitHub Pages routing work for no gain.
     `python3 build.py --allow-missing` falls back to English and lists every gap.
   - `python3 build.py --check` rebuilds into a temporary folder and fails if `docs/` differs, so a commit
     never ships stale output.
+  - Every build also checks that each root-relative link and asset in the output exists.
+- **Open Graph images** (`src/assets/img/og/softfill-og-<lang>.png`, 1200 × 630) come from the hero strings and
+  the brand files: `python3 tools/make_og.py` after the hero copy changes. The favicon set
+  (`src/assets/img/icon/`) is the light app icon: the SVG with iOS-style rounded corners, a 32 px PNG and the
+  180 px Apple touch icon.
 - **Preview**: `python3 build.py && python3 -m http.server 8000 -d docs`, then http://localhost:8000.
   Absolute links like `/privacy` need the local server; `file://` will not resolve them.
 - Change `src/` and rebuild; never edit `docs/` by hand. Commit `src/` and the rebuilt `docs/` together.
@@ -226,8 +245,10 @@ In Romanian use the standard forms (o sută, șaizeci, paisprezece, șaisprezece
 
 ## Hosting
 
-- GitHub repo `a7ex-turcan/softfill-web`. Pages settings: "Deploy from a branch", branch `main`, folder
-  `/docs`. No GitHub Actions; the committed `docs/` is what gets served.
+- GitHub repo `a7ex-turcan/softfill-web`, created private on 2026-10-12. Pages settings: "Deploy from a
+  branch", branch `main`, folder `/docs`. No GitHub Actions; the committed `docs/` is what gets served. Pages
+  on a private repo needs a paid GitHub plan (Pro for a personal account); on the Free plan the repo has to be
+  public first. Alex's call.
 - `docs/CNAME` contains `softfill.nutrx-labs.com`; the build writes it, so it survives every rebuild.
 - DNS at Cloudflare: a CNAME record `softfill` → `a7ex-turcan.github.io`, **DNS only (grey cloud)** until
   GitHub has issued the HTTPS certificate; then tick "Enforce HTTPS" in the repo's Pages settings. Proxying
@@ -252,16 +273,18 @@ In Romanian use the standard forms (o sută, șaizeci, paisprezece, șaisprezece
 - Keep this file current. When a product fact, price or the privacy story changes in the app, update the
   "Product facts" and "Privacy facts" sections here in the same change as the page that uses them.
 - Before committing a page, run `python3 build.py --check` and look at the page at 390 and 1440 wide in
-  light and dark mode, served by the local preview server. Headless Chrome takes the screenshots:
-  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu
-  --hide-scrollbars --blink-settings=preferredColorScheme=1 --window-size=390,2000 --screenshot=out.png
-  "http://localhost:8000/privacy"`. `preferredColorScheme=1` forces light and `=0` dark; without it headless
-  Chrome follows the Mac's appearance, and `--force-dark-mode` does not switch the page. Read the PNG back
-  to check it.
+  light and dark mode, served by the local preview server. `tools/screenshots.sh <out-dir> [path ...]` takes
+  all four with headless Chrome; read the PNGs back to check them. Two traps it works around: headless Chrome
+  never lays a page out narrower than 500 px, so a plain `--window-size=390,…` screenshot is a 500 px page cut
+  off on the right (the script loads the page in a 390 px iframe and crops); and `preferredColorScheme=1`
+  forces light and `=0` dark, while `--force-dark-mode` does not switch the page. Keep screenshots out of the
+  repo (the scratchpad, or ignored PNGs at the root).
 - Ask before anything outward-facing: creating the GitHub repo, changing DNS, publishing. Pushing to `main`
   publishes the site.
 - Once the repo exists, every change goes through a pull request into `main` with a self-review posted on
-  the PR before it merges, the same workflow as the app (`../softfill/CLAUDE.md`, "Pull requests").
+  the PR before it merges, the same workflow as the app (`../softfill/CLAUDE.md`, "Pull requests"), except
+  that nobody else reviews this repo: decided 2026-10-12, Claude merges its own PRs once the self-review's
+  findings are fixed or answered on the PR, `build.py --check` passes and the pages have been looked at.
 - Commits: imperative subject under 72 characters, a body that says why. A `.gitignore` keeps out
   `.DS_Store`, `__pycache__/` and screenshots.
 - Report what was checked and what was not.
