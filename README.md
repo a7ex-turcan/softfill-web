@@ -6,8 +6,8 @@ Connect link to: privacy policy, terms of use and support, in English, German, R
 
 **Status (2026-10-12):** the build is in place. Home follows the approved design, with art and videos
 rendered from the app's own drawings. Privacy, Terms, Support and the 404 page are written in English.
-German, Romanian and Russian follow the app's translation pass. GitHub Pages is on and serves `main`'s `/docs`;
-the site goes live at https://softfill.nutrx-labs.com once the Cloudflare DNS record exists.
+German, Romanian and Russian follow the app's translation pass. The site is served by GitHub Pages at
+https://softfill.nutrx-labs.com; HTTPS is enforced once GitHub has issued the domain's certificate.
 
 ## Build and preview
 
