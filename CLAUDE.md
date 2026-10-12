@@ -313,8 +313,9 @@ no-break space before the dot so it never starts a line. The parental gate mock'
     record, or it soft-fails.
   - Replies go out from the Outlook address, not `softfill@`. Answering as `softfill@` needs a sending
     service (Brevo is set up for the domain already).
-- Recommended once DNS works: verify `nutrx-labs.com` for the account (GitHub settings, Pages, "Add a
-  domain", a TXT record at Cloudflare), so no other GitHub account can claim a subdomain of it.
+- `nutrx-labs.com` is **verified** for the `a7ex-turcan` account (2026-10-12; GitHub profile settings, Pages),
+  so no other GitHub account can claim it or any subdomain, including `www`. The proof is the TXT record
+  `_github-pages-challenge-a7ex-turcan` at Cloudflare. Keep it: deleting it unverifies the domain.
 - Alex creates the GitHub repo, the Pages settings and the DNS record, or approves each step first. All three
   done on 2026-10-12 with his approval.
 
