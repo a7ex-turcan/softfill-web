@@ -2,7 +2,8 @@
    - the language menu (a <details>, so it opens and closes without JavaScript) also closes on Escape, on a
      click outside it and when focus leaves it;
    - Home's hero video starts if autoplay alone didn't start it (the poster stays if the browser refuses,
-     as Safari does in Low Power Mode). Under reduced motion no video source matches, so nothing loads;
+     as Safari does in Low Power Mode), and its pause button appears once it plays (WCAG 2.2.2). Under
+     reduced motion no video source matches, so nothing loads and no button shows;
    - Home's time-lapse card plays its replay from the design's own play button and scrubber. Without
      JavaScript the card shows the finished drawing and no button. */
 (function () {
@@ -36,6 +37,26 @@
     };
     if (hero.readyState >= 3) start();
     else hero.addEventListener('canplay', start, { once: true });
+
+    var toggle = document.querySelector('[data-hero-toggle]');
+    if (toggle) {
+      var sync = function () {
+        if (!hero.currentSrc) return;
+        toggle.hidden = false;
+        toggle.classList.toggle('is-paused', hero.paused);
+      };
+      hero.addEventListener('play', sync);
+      hero.addEventListener('pause', sync);
+      if (!hero.paused) sync();
+      toggle.addEventListener('click', function () {
+        if (hero.paused) {
+          var playing = hero.play();
+          if (playing && playing.catch) playing.catch(function () {});
+        } else {
+          hero.pause();
+        }
+      });
+    }
   }
 
   var card = document.querySelector('[data-timelapse]');
