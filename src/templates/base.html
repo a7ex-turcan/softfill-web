@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+{{ canonical_html }}
+{{ alternates_html }}
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site_name }}">
+<meta property="og:locale" content="{{ og_locale }}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+{{> app_meta }}
+<link rel="icon" href="/assets/img/icon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/icon/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/icon/apple-touch-icon.png">
+<link rel="stylesheet" href="{{ css_url }}">
+<script src="{{ js_url }}" defer></script>
+</head>
+<body class="page-{{ page }}">
+<a class="skip-link" href="#main">{{ skip_link }}</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ home_url }}" aria-label="{{ brand_home_label }}">
+      <img class="app-icon brand-icon" src="/assets/img/brand/AppIcon-light.svg" alt="" width="34" height="34">
+      <picture>
+        <source srcset="/assets/img/brand/softfill-wordmark-light.svg" media="(prefers-color-scheme: dark)">
+        <img class="brand-wordmark" src="/assets/img/brand/softfill-wordmark-ink.svg" alt="Softfill" width="86" height="22">
+      </picture>
+    </a>
+    <div class="header-actions">
+      {{> lang_switcher }}
+      {{> store_cta_small }}
+    </div>
+  </div>
+</header>
+<main id="main">
+{{ content_html }}
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-brand">
+      <img class="app-icon" src="/assets/img/brand/AppIcon-light.svg" alt="" width="28" height="28">
+      <span>{{ footer_copyright }}</span>
+    </p>
+    <nav class="footer-nav" aria-label="{{ footer_nav_label }}">
+      <a href="{{ prefix }}/privacy">{{ footer_privacy }}</a>
+      <a href="{{ prefix }}/terms">{{ footer_terms }}</a>
+      <a href="{{ prefix }}/support">{{ footer_support }}</a>
+      <a class="footer-mail" href="mailto:softfill@nutrx-labs.com">softfill@nutrx-labs.com</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

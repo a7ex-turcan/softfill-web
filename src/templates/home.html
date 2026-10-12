@@ -1,0 +1,22 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <div class="hero-brand">
+      <img class="app-icon" src="/assets/img/brand/AppIcon-light.svg" alt="" width="60" height="60">
+      <div class="hero-brand-text">
+        <picture>
+          <source srcset="/assets/img/brand/softfill-wordmark-light.svg" media="(prefers-color-scheme: dark)">
+          <img class="hero-wordmark" src="/assets/img/brand/softfill-wordmark-ink.svg" alt="Softfill" width="102" height="26">
+        </picture>
+        <p class="hero-tagline">{{ hero_tagline }}</p>
+      </div>
+    </div>
+    <div class="hero-text">
+      <h1 id="hero-title">{{ hero_title }}</h1>
+      <p class="hero-lede">{{ hero_lede }}</p>
+    </div>
+    <div class="hero-cta">
+      {{> store_cta }}
+      <p class="hero-note">{{ hero_note }}</p>
+    </div>
+  </div>
+</section>
