@@ -496,6 +496,8 @@ ul, ol { margin: 0; padding-left: 1.3em; }
 .article { max-width: 680px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) var(--side) clamp(64px, 9vw, 120px); }
 .article-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); }
 .article-head h1 { font-size: clamp(36px, 4.6vw, 56px); letter-spacing: -0.03em; line-height: 1.04; }
+/* "Datenschutzerklärung" and "конфиденциальности" are wider than a phone at this size. */
+.article-head h1 { hyphens: auto; -webkit-hyphens: auto; }
 .article-meta { font-size: 15px; font-weight: 700; color: var(--ink-2); }
 .article-lede { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.55; color: var(--ink-2); }
 .article-body { font-size: 17px; line-height: 1.6; }

@@ -2,14 +2,130 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://softfill.nutrx-labs.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ro/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/"/>
   </url>
   <url>
     <loc>https://softfill.nutrx-labs.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/de/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ro/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ru/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/privacy/"/>
   </url>
   <url>
     <loc>https://softfill.nutrx-labs.com/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/terms/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/de/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/terms/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ro/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/terms/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ru/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/terms/"/>
   </url>
   <url>
     <loc>https://softfill.nutrx-labs.com/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/support/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/support/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/support/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/support/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/de/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/support/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/support/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/support/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/support/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ro/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/support/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/support/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/support/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/support/"/>
+  </url>
+  <url>
+    <loc>https://softfill.nutrx-labs.com/ru/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://softfill.nutrx-labs.com/support/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://softfill.nutrx-labs.com/de/support/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://softfill.nutrx-labs.com/ro/support/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://softfill.nutrx-labs.com/ru/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://softfill.nutrx-labs.com/support/"/>
   </url>
 </urlset>
