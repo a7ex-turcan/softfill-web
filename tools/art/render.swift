@@ -25,7 +25,7 @@ struct DrawingDoc: Decodable {
         let id: Int; let area: Int; let bounds: Rect; let center: Point; let centerRadius: Double
         let counts: Bool; let slot: Int
     }
-    struct Palette: Decodable { let id: String; let colors: [String] }
+    struct Palette: Decodable { let id: String; let colors: [String]; let secondColors: [String]? }
     let id: String
     let image: Size
     let regions: [Region]
@@ -96,7 +96,11 @@ final class Drawing {
         guard let p = doc.palettes.first(where: { $0.id == id }) else {
             fail("\(doc.id) has no palette \(id); it has \(doc.palettes.map(\.id).joined(separator: ", "))")
         }
-        return p.colors.map(RGB.init(hex:))
+        // The app's `Palette.swatches`: with second tones, each main color followed by its second.
+        let swatches = p.secondColors.map { seconds in
+            seconds.count == p.colors.count ? zip(p.colors, seconds).flatMap { [$0, $1] } : p.colors
+        } ?? p.colors
+        return swatches.map(RGB.init(hex:))
     }
 
     func region(_ id: Int) -> DrawingDoc.Region {
@@ -137,8 +141,12 @@ final class Paint {
     }
 
     func color(of region: Int) -> RGB {
-        let slot = drawing.region(region).slot
-        return colors[max(0, min(colors.count - 1, slot - 1))]
+        swatch(forSlot: drawing.region(region).slot)
+    }
+
+    /// The app's `Palette.swatch(forSlot:)`: slots count from 1 and wrap past the end.
+    func swatch(forSlot slot: Int) -> RGB {
+        colors[max(slot - 1, 0) % colors.count]
     }
 
     @inline(__always) func set(_ i: Int, _ c: RGB) {
@@ -197,7 +205,7 @@ final class Paint {
             }
             mask.addLine(to: pts[pts.count - 1]); mask.strokePath()
             let m = data.bindMemory(to: UInt8.self, capacity: w * h)
-            let c = stroke.color.map(RGB.init(hex:)) ?? colors[max(0, min(colors.count - 1, (stroke.slot ?? 1) - 1))]
+            let c = stroke.color.map(RGB.init(hex:)) ?? swatch(forSlot: stroke.slot ?? 1)
             let allowed = Set(stroke.regions)
             for i in 0..<(w * h) where m[i] > 0 && allowed.contains(Int(drawing.owner[i])) {
                 let a = Int(m[i]), p = i * 4

@@ -72,12 +72,12 @@ Built 2026-10-12, with these choices on top of the handoff:
   canvas chrome around it so the device's text can be translated. 1152 px for wide screens, 768 px below
   700 px; no video at all under reduced motion.
 - Art from the app's own drawings: the Little card is Sea Turtle (Coral reef), the Easy card Fox Den (Fox
-  glade), the time-lapse Pond Ducks (Beach day). The Detailed and Intricate cards show "First packs on the
-  way" on an empty dotted page until those levels have art; then add recipe outputs and swap the two
-  `level-art-soon` blocks in `home.html` for pictures.
+  glade), the Detailed card Kingfisher Stream (Pine hollow), the Intricate card Moon Mandala (Cosmos), the
+  time-lapse Pond Ducks (Beach day). The Detailed and Intricate cards replaced "First packs on the way" on
+  2026-10-13, when those levels got their packs.
 - "No accounts" says "on your device and in your own iCloud", because iCloud sync is built (Product facts,
-  Devices). The Devices section uses the not-shipped copy; `IPHONE_SHIPPED` switches it and hides the phone's
-  "Coming soon" pill.
+  Devices). The Devices section uses the shipped copy since 2026-10-13 (`IPHONE_SHIPPED`, which also hides the
+  phone's "Coming soon" pill), and the hero's tagline and the Home title name both devices.
 
 ### Support
 A short intro, an FAQ with expandable answers (use `<details>`), and the contact address. FAQ topics:
@@ -106,13 +106,13 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   - Intricate — "Mandalas & patterns · an hour or more"
   - Studio (freehand pencil, marker, watercolor) is **v1.1**. Do not promise it on the site until it ships,
     even though the app's Unlimited copy mentions it.
-- **Content today** (checked 2026-10-12): Little has three free packs (Sunny Days, Under the Sea, Farm
-  Friends); Easy has Meadow Friends and Into the Woods (free) and Seaside Towns (paid, "harbors, boats and beach
-  huts"). **Detailed and Intricate have no packs yet**: they wait on an art spike (`../softfill/PLAN.md`,
-  Content track, item 5). The rule: Little has 3 free packs, Easy, Detailed and Intricate 2 each, and every
-  paid pack has one drawing that is free to try. Pack sizes and the reasoning: `../softfill/PLAN.md`, Content
-  track. Never give a number of packs. Until Detailed and Intricate have their packs, say "free packs to start",
-  not "free packs in every level". Current list:
+- **Content today** (checked 2026-10-13, the launch catalog): every level has its free packs and two paid
+  packs. Little: Sunny Days, Under the Sea, Farm Friends (free), Dino Park, Unicorn Valley (paid). Easy: Meadow
+  Friends, Into the Woods (free), Seaside Towns, Pets at Home (paid). Detailed: Botanical Studies, Garden Birds
+  (free), Japanese Gardens, City Windows (paid). Intricate: Mandala Nights, Geometric Calm (free), Art Nouveau,
+  Stained Glass (paid). The rule: Little has 3 free packs, Easy, Detailed and Intricate 2 each, and every paid
+  pack has one drawing that is free to try. Pack sizes and the reasoning: `../softfill/PLAN.md`, Content track.
+  Never give a number of packs; "free packs in every level" is true now. Current list:
   `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
 - **Pricing (internal reference only)**: packs $1.99 each, yours forever; Softfill Unlimited $2.99 a month
   or $19.99 a year with a 7-day free trial, every pack included, new packs monthly. Unlimited is shared
@@ -138,8 +138,8 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   local midnight, then locks again. Finished, it stays in the Gallery; unfinished, its colors are kept until
   the pack is unlocked. An opt-in local reminder at 9:00 names the day's drawing. Hidden for Unlimited members.
 - **Devices**: iPad first, iPhone supported. iCloud sync is built (Phase 3 item 6, 2026-10-12, waiting on its
-  two-device check), so the pages describe it as part of the app. The iPhone layouts are not built yet
-  (Phase 3 item 7): describe iPhone only as planned ("Made for iPad. Coming to iPhone.").
+  two-device check), so the pages describe it as part of the app. The iPhone layouts are built (Phase 3 item 7,
+  2026-10-12): v1 runs on both, and on iPhone in portrait only.
 - **Languages**: English, German, Romanian, Russian.
 - **App Store**: app id `6820982967`, so the link will be `https://apps.apple.com/app/id6820982967`. Until
   the app is live, say "Coming soon to the App Store" instead of showing a badge that links nowhere. Once it
@@ -184,9 +184,12 @@ Design system, from `../softfill/design_handoff_softfill/spec/design-tokens.md` 
 Assets:
 
 - **Line art**: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/Drawings/<id>/lineart.png`
-  (black on white, 8-bit grey, 1536 or 2048 wide), with `regions.bin` and `drawing.json` beside it.
+  (black on white, 4-bit grey, 1536 wide for Little and Easy, 3520 for Detailed and Intricate), with
+  `regions.bin` and `drawing.json` beside it.
 - **Colored art and videos**: `tools/art/build.sh` renders them from those files, as the app colors them: each
-  region in its palette color by slot, the line art multiplied on top. `tools/art/recipe.json` lists every
+  region in its palette color by slot, the line art multiplied on top. Slots count through the app's swatches
+  (`Palette.swatch(forSlot:)`): the main colors, or for palettes with second tones (Detailed and Intricate)
+  each main color followed by its second. `tools/art/recipe.json` lists every
   output (drawing, palette, which regions, crop, sizes); `render --debug <id> out.png` numbers a drawing's
   regions for writing a recipe. Stills come out as AVIF with a JPEG fallback, videos as H.264 MP4, all with
   the macOS frameworks only. Rerun it when the app's art or palettes change, then rebuild. Two things in
