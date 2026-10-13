@@ -163,8 +163,11 @@
         </div>
       </article>
       <article class="level-card level-detailed">
-        <div class="level-art level-art-soon">
-          <span class="level-soon">{{ level_soon }}</span>
+        <div class="level-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/level-detailed-600.avif">
+            <img src="/assets/img/home/level-detailed-600.jpg" alt="{{ level_detailed_alt }}" width="600" height="400" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="level-text">
           <h3><span class="level-dot" aria-hidden="true"></span>{{ level_detailed_name }}</h3>
@@ -172,8 +175,11 @@
         </div>
       </article>
       <article class="level-card level-intricate">
-        <div class="level-art level-art-soon">
-          <span class="level-soon">{{ level_soon }}</span>
+        <div class="level-art">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/level-intricate-600.avif">
+            <img src="/assets/img/home/level-intricate-600.jpg" alt="{{ level_intricate_alt }}" width="600" height="400" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="level-text">
           <h3><span class="level-dot" aria-hidden="true"></span>{{ level_intricate_name }}</h3>

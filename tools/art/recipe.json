@@ -124,6 +124,26 @@
       "out": "src/assets/img/home/level-easy"
     },
     {
+      "id": "level-detailed",
+      "type": "still",
+      "drawing": "kingfisher-stream",
+      "palette": "pine-hollow",
+      "fill": {"all": true},
+      "crop": [8, 0, 3504, 2336],
+      "widths": [600],
+      "out": "src/assets/img/home/level-detailed"
+    },
+    {
+      "id": "level-intricate",
+      "type": "still",
+      "drawing": "moon-mandala",
+      "palette": "cosmos",
+      "fill": {"all": true},
+      "crop": [8, 0, 3504, 2336],
+      "widths": [600],
+      "out": "src/assets/img/home/level-intricate"
+    },
+    {
       "id": "og-art",
       "type": "still",
       "drawing": "sunny-meadow",
