@@ -277,6 +277,22 @@ Write " · " with plain spaces where a line joins two parts (the level lines, th
 no-break space before the dot so it never starts a line. The parental gate mock's number in words must match its digits
 (3, 4) in every language.
 
+Drafted 2026-10-13 (every string and both articles), waiting on a native speaker's read before they publish:
+- **Register**: the app's, informal throughout (du, tu, ты). The handoff's Russian hero draft said «вы»; the app
+  says «ты», and the site quotes the app's buttons, so the site follows the app. Revisit with the native read.
+- **Terms** come from the app's catalog: the level names and lines, "Ask a grown-up", the gate card, Settings'
+  rows (Restore purchases, Manage subscription, iCloud sync), Fill and Draw, "Inside lines", Gallery. Content
+  names (Sunny Meadow, Garden party) come from the drawing's and palette's own names.
+- **Apple's names**: Familienfreigabe and Kaufanfrage; Partajare familială and Cerere de cumpărare (Apple's newer
+  Romanian help pages); Семейный доступ and «Попросить купить». Apple Account stays "Apple Account" in German,
+  "contul Apple" in Romanian, "аккаунт Apple" in Russian. iOS Settings is Einstellungen, Configurări, Настройки.
+- **The hero** takes the handoff's drafts where they read better (its titles, ledes and taglines, German
+  "Demnächst"), aligned with the app's words ("în contur", not "între linii").
+- **The gate mock** spells 347 as Foundation's spell-out does in each language (the app's own formatter); the
+  German number carries soft hyphens so it breaks inside the card.
+- Article titles hyphenate (`.article-head h1`): "Datenschutzerklärung" and "конфиденциальности" are wider than
+  a 390 px screen at 36 px.
+
 ## Hosting
 
 - GitHub repo `a7ex-turcan/softfill-web`, created on 2026-10-12 and made **public** the same day (Alex's
@@ -331,7 +347,7 @@ no-break space before the dot so it never starts a line. The parental gate mock'
    the same system (handoff README, "Not designed yet") and shown to Alex before publishing.
 3. **Privacy and Support** in English (they gate TestFlight).
 4. Home, Terms and 404.
-5. German, Romanian and Russian versions.
+5. German, Romanian and Russian versions. Drafted 2026-10-13 (see Languages); published once read.
 6. Report the final URLs back to the app session: it wires them into `ExternalLinks.swift` and App Store
    Connect (privacy, support and marketing URL per language, TestFlight test information).
 
