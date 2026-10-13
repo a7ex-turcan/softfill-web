@@ -277,9 +277,9 @@ Write " · " with plain spaces where a line joins two parts (the level lines, th
 no-break space before the dot so it never starts a line. The parental gate mock's number in words must match its digits
 (3, 4) in every language.
 
-Drafted 2026-10-13 (every string and both articles), waiting on a native speaker's read before they publish:
-- **Register**: the app's, informal throughout (du, tu, ты). The handoff's Russian hero draft said «вы»; the app
-  says «ты», and the site quotes the app's buttons, so the site follows the app. Revisit with the native read.
+Published 2026-10-13 (every string and both articles; Alex: publish before the native read, fix wording after it):
+- **Register**: the app's, informal throughout (du, tu, ты). The handoff's Russian hero draft said «вы»; Alex chose
+  «ты» like the app (2026-10-13), for the site and the App Store text alike.
 - **Terms** come from the app's catalog: the level names and lines, "Ask a grown-up", the gate card, Settings'
   rows (Restore purchases, Manage subscription, iCloud sync), Fill and Draw, "Inside lines", Gallery. Content
   names (Sunny Meadow, Garden party) come from the drawing's and palette's own names.
@@ -347,7 +347,7 @@ Drafted 2026-10-13 (every string and both articles), waiting on a native speaker
    the same system (handoff README, "Not designed yet") and shown to Alex before publishing.
 3. **Privacy and Support** in English (they gate TestFlight).
 4. Home, Terms and 404.
-5. German, Romanian and Russian versions. Drafted 2026-10-13 (see Languages); published once read.
+5. German, Romanian and Russian versions. Published 2026-10-13 (see Languages); a native speaker's read is still due.
 6. Report the final URLs back to the app session: it wires them into `ExternalLinks.swift` and App Store
    Connect (privacy, support and marketing URL per language, TestFlight test information).
 
