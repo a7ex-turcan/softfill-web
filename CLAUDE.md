@@ -115,8 +115,8 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   Never give a number of packs; "free packs in every level" is true now. Current list:
   `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
 - **Pricing (internal reference only)**: packs $1.99 each, yours forever; Softfill Unlimited $2.99 a month
-  or $19.99 a year with a 7-day free trial, every pack included, new packs monthly. Unlimited is shared
-  through Family Sharing; packs are not.
+  or $19.99 a year with a 7-day free trial, every pack included, new packs monthly. Unlimited and every
+  pack are shared through Family Sharing (Alex, 2026-10-14).
 - **Kids and parents**: rated 4+ in a general category, **not** Apple's Kids Category. A parental gate (type
   a three-digit number written in words) is asked every time before any purchase, Settings, Restore or link
   that leaves the app. The Little level shows no prices, no Unlimited banner, no share buttons and no
