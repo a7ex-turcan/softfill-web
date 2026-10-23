@@ -555,6 +555,16 @@ ul, ol { margin: 0; padding-left: 1.3em; }
 .footer-brand .app-icon { width: 28px; height: 28px; }
 .footer-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; font-size: 15px; font-weight: 800; }
 .footer-mail { font-weight: 700; color: var(--ink-2); }
+/* Also from nutrx labs: the princess maze game, linked above the footer row */
+.footer-more { padding-top: 32px; }
+.footer-more + .footer-inner { padding-top: 24px; }
+.footer-more-link { display: inline-flex; align-items: center; gap: 12px; }
+.footer-more picture { flex: none; display: block; }
+.footer-more .app-icon { display: block; width: 40px; height: 40px; }
+.footer-more-text { display: flex; flex-direction: column; gap: 2px; font-size: 15px; }
+.footer-more-label { font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.footer-more-name { font-weight: 800; }
+.footer-more-desc { font-weight: 700; color: var(--ink-2); }
 
 /* ---- Motion ---- */
 @media (prefers-reduced-motion: reduce) {

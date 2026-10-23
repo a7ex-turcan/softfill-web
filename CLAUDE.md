@@ -90,7 +90,10 @@ phone. Terms point to Apple's standard EULA and add only what it does not cover.
 
 ### Shared on every page
 - **Header**: the Softfill mark, the language switcher (EN · DE · RO · RU), the App Store badge.
-- **Footer**: Privacy · Terms · Support, `softfill@nutrx-labs.com`, "© nutrx labs".
+- **Footer**: Privacy · Terms · Support, `softfill@nutrx-labs.com`, "© nutrx labs". Above that row, an
+  "Also from nutrx labs" link to Where's My Crown? (https://princess.nutrx-labs.com), the princess maze game for
+  little kids, with its app icon (`src/assets/img/more/`). Added 2026-10-23 at Alex's request. The game is
+  English-only, so the German, Romanian and Russian lines say so.
 
 ## Product facts
 
