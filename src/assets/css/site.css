@@ -185,7 +185,7 @@ ul, ol { margin: 0; padding-left: 1.3em; }
 /* Apple's badge, unaltered: 40 px tall at least, with clear space of a quarter of its height around it. */
 .store-badge { display: block; flex: none; border-radius: 9px; }
 .store-badge img { display: block; height: 56px; width: auto; }
-.store-badge-small { margin-inline-start: 2px; }
+.store-badge-small { margin-inline-start: 2px; border-radius: 7px; }
 .store-badge-small img { height: 40px; }
 /* Unlike the "Coming soon" pill, the badge cannot shorten, so narrow phones make room around it: the language
    button drops its chevron below 400 px, and the header keeps only the app icon below 375 px. */
