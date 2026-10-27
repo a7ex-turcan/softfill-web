@@ -27,9 +27,8 @@ SITE = f"https://{DOMAIN}"
 APP_STORE_URL = "https://apps.apple.com/app/id6820982967"
 APP_STORE_ID = "6820982967"
 # App Store Connect counts downloads per campaign link: the team's provider token and one campaign per language,
-# so the site's installs show apart from every other channel (softfill issue #143, content/app-store/
-# campaign-links.md there). No tracking: Apple
-# reports the totals, nobody sees a visitor.
+# so the site's installs show apart from every other channel (softfill issue #143 and its
+# content/app-store/campaign-links.md). No tracking: Apple reports the totals, nobody sees a visitor.
 APP_STORE_PROVIDER_TOKEN = "128679442"
 
 
