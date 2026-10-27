@@ -182,8 +182,20 @@ ul, ol { margin: 0; padding-left: 1.3em; }
   display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800;
 }
 .soon-cta .icon { width: 22px; height: 22px; color: var(--ink-2); }
-.store-badge img { height: 56px; width: auto; }
+/* Apple's badge, unaltered: 40 px tall at least, with clear space of a quarter of its height around it. */
+.store-badge { display: block; flex: none; border-radius: 9px; }
+.store-badge img { display: block; height: 56px; width: auto; }
+.store-badge-small { margin-inline-start: 2px; border-radius: 7px; }
 .store-badge-small img { height: 40px; }
+/* Unlike the "Coming soon" pill, the badge cannot shorten, so narrow phones make room around it: the language
+   button drops its chevron below 400 px, and the header keeps only the app icon below 375 px. */
+@media (max-width: 399.98px) {
+  .lang-summary { padding: 0 10px; }
+  .lang-summary .icon:last-child { display: none; }
+}
+@media (max-width: 374.98px) {
+  .brand picture { display: none; }
+}
 
 /* ---- Hero ---- */
 .hero {

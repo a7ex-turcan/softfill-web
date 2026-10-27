@@ -89,7 +89,9 @@ One long-form article template for both: headings, readable line length, a "last
 phone. Terms point to Apple's standard EULA and add only what it does not cover.
 
 ### Shared on every page
-- **Header**: the Softfill mark, the language switcher (EN · DE · RO · RU), the App Store badge.
+- **Header**: the Softfill mark, the language switcher (EN · DE · RO · RU), the App Store badge (40 px tall).
+  The badge cannot shorten the way the "Coming soon" pill did, so below 400 px the language button drops its
+  chevron and below 375 px the header shows the app icon without the wordmark (2026-10-27).
 - **Footer**: Privacy · Terms · Support, `softfill@nutrx-labs.com`, "© nutrx labs". Above that row, an
   "Also from nutrx labs" link to Where's My Crown? (https://princess.nutrx-labs.com), the princess maze game for
   little kids, with its app icon (`src/assets/img/more/`). Added 2026-10-23 at Alex's request. The game is
@@ -109,14 +111,16 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   - Intricate — "Mandalas & patterns · an hour or more"
   - Studio (freehand pencil, marker, watercolor) is **v1.1**. Do not promise it on the site until it ships,
     even though the app's Unlimited copy mentions it.
-- **Content today** (checked 2026-10-13, the launch catalog): every level has its free packs and two paid
-  packs. Little: Sunny Days, Under the Sea, Farm Friends (free), Dino Park, Unicorn Valley (paid). Easy: Meadow
-  Friends, Into the Woods (free), Seaside Towns, Pets at Home (paid). Detailed: Botanical Studies, Garden Birds
-  (free), Japanese Gardens, City Windows (paid). Intricate: Mandala Nights, Geometric Calm (free), Art Nouveau,
-  Stained Glass (paid). The rule: Little has 3 free packs, Easy, Detailed and Intricate 2 each, and every paid
-  pack has one drawing that is free to try. Pack sizes and the reasoning: `../softfill/PLAN.md`, Content track.
-  Never give a number of packs; "free packs in every level" is true now. Current list:
-  `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
+- **Content today** (checked 2026-10-27 against `catalog.json`): every level has its free packs and at least two
+  paid packs. Little: Sunny Days, Under the Sea, Farm Friends (free), Dino Park, Unicorn Valley, Space Adventure
+  (paid). Easy: Meadow Friends, Into the Woods (free), Seaside Towns, Pets at Home, Hearts Everywhere, Chill
+  Capybaras (paid). Detailed: Botanical Studies, Garden Birds (free), Japanese Gardens, City Windows, Ocean Life
+  (paid). Intricate: Mandala Nights, Geometric Calm (free), Art Nouveau, Stained Glass (paid). The launch catalog
+  had two paid packs per level; Hearts Everywhere, Chill Capybaras, Space Adventure and Ocean Life came after, and
+  one or two new packs a month follow. The site names no packs. The rule: Little has 3 free packs, Easy,
+  Detailed and Intricate 2 each, and every paid pack has one drawing that is free to try. Pack sizes and the
+  reasoning: `../softfill/PLAN.md`, Content track. Never give a number of packs; "free packs in every level" is
+  true now. Current list: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/catalog.json`.
 - **Pricing (internal reference only)**: packs $1.99 each, yours forever; Softfill Unlimited $2.99 a month
   or $19.99 a year with a 7-day free trial, every pack included, new packs monthly. Unlimited and every
   pack are shared through Family Sharing (Alex, 2026-10-14).
@@ -144,9 +148,10 @@ Check these against `../softfill` before publishing; the app wins if they disagr
   two-device check), so the pages describe it as part of the app. The iPhone layouts are built (Phase 3 item 7,
   2026-10-12): v1 runs on both, and on iPhone in portrait only.
 - **Languages**: English, German, Romanian, Russian.
-- **App Store**: app id `6820982967`, so the link will be `https://apps.apple.com/app/id6820982967`. Until
-  the app is live, say "Coming soon to the App Store" instead of showing a badge that links nowhere. Once it
-  is live, add the Smart App Banner meta tag (`apple-itunes-app`).
+- **App Store**: **live since 2026-10-27** (version 1.0, "Softfill: Calm Coloring Book", app id `6820982967`).
+  `APP_LIVE` is on: every page shows Apple's badge linking to `https://apps.apple.com/app/id6820982967` (no
+  country path, so each visitor lands in their own storefront) and carries the Smart App Banner meta tag
+  (`apple-itunes-app`). The "Coming soon" strings and partials stay in `src/` in case the app is ever pulled.
 
 ## Privacy facts for the privacy page
 
@@ -200,8 +205,15 @@ Assets:
   colored": counted regions filled in its first frame, out of all counted regions) and the six dock swatches
   (its palette's colors), in both device mocks. Change them together.
 - **Screenshots**: from the app on the iPad simulator now; iPhone ones after the Phase 3 layouts.
-- **App Store badges**: Apple's official, localized badges from Apple's marketing resources, self-hosted,
-  used as Apple's guidelines say.
+- **App Store badges**: Apple's official, localized "Download on the App Store" badges, self-hosted in
+  `src/assets/img/badges/app-store-<lang>.svg` (the build fails without one per language). Downloaded
+  2026-10-27, unaltered, from Apple's marketing tools:
+  `https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/<en-us|de-de|ro-ro|ru-ru>`
+  (it redirects to `toolbox.marketingtools.apple.com`). The black badge only: its grey outline keeps it legible
+  in dark mode, so there is no white variant. Apple's rules: never alter or recolor it, at least 40 px tall
+  on screen (header 40, hero and closing CTA 56), clear space of a quarter of its height around it. The link's
+  `aria-label` (`store_badge_label`) repeats the badge's own words, so the Romanian one is formal
+  ("Descărcați de pe App Store") like Apple's badge, unlike the rest of the site.
 - **Brand** (designed 2026-10-10): the app icon and the wordmark are in `src/assets/img/brand/`, copied from
   `../softfill/design_handoff_softfill/brand/`; the rules are in `../softfill/design_handoff_softfill/spec/brand.md`
   (read it in full). Icon: `AppIcon-light` / `-dark` as SVG and 1024 PNG. Wordmark: `softfill-wordmark-ink`
