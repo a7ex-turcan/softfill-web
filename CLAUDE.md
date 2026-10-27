@@ -158,7 +158,9 @@ Check these against `../softfill` before publishing; the app wins if they disagr
 - **App Store**: **live since 2026-10-27** (version 1.0, "Softfill: Calm Coloring Book", app id `6820982967`).
   `APP_LIVE` is on: every page shows Apple's badge linking to `https://apps.apple.com/app/id6820982967` (no
   country path, so each visitor lands in their own storefront) and carries the Smart App Banner meta tag
-  (`apple-itunes-app`). The "Coming soon" strings and partials stay in `src/` in case the app is ever pulled.
+  (`apple-itunes-app`). The badge's link is a campaign link (`?pt=128679442&ct=website-<lang>&mt=8`, from
+  `app_store_campaign_url` in `build.py`, 2026-10-27), so App Store Connect counts the site's downloads per
+  language apart from the other channels. It is Apple's own count, not tracking: the privacy story is unchanged. The "Coming soon" strings and partials stay in `src/` in case the app is ever pulled.
 
 ## Privacy facts for the privacy page
 

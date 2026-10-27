@@ -26,6 +26,15 @@ DOMAIN = "softfill.nutrx-labs.com"
 SITE = f"https://{DOMAIN}"
 APP_STORE_URL = "https://apps.apple.com/app/id6820982967"
 APP_STORE_ID = "6820982967"
+# App Store Connect counts downloads per campaign link: the team's provider token and one campaign per language,
+# so the site's installs show apart from every other channel (softfill PLAN.md, issue #143). No tracking: Apple
+# reports the totals, nobody sees a visitor.
+APP_STORE_PROVIDER_TOKEN = "128679442"
+
+
+def app_store_campaign_url(lang):
+    return f"{APP_STORE_URL}?pt={APP_STORE_PROVIDER_TOKEN}&ct=website-{lang}&mt=8"
+
 
 # Every language the site will have, in switcher order. A language is published (built, listed in the switcher,
 # hreflang and the sitemap) once src/strings/<lang>.json exists; English always is.
@@ -209,7 +218,7 @@ def page_context(page, lang, strings, css_url, js_url, article=None):
         "switcher_name": LANG_NAMES[lang][0],
         "css_url": css_url,
         "js_url": js_url,
-        "app_store_url": APP_STORE_URL,
+        "app_store_url": app_store_campaign_url(lang),
         "app_store_id": APP_STORE_ID,
         "alternates_html": alternates_html(page) if page != "notfound" else "",
         "lang_menu_html": lang_menu_html(page if page != "notfound" else "home", lang,
