@@ -22,7 +22,6 @@
   --bg: #FBFAF7;
   --surface: #FFFFFF;
   --surface-2: #F5F3F0;
-  --stage: #F0EEEA;
   --line: #E3E1DD;
   --ink: #1C1F25;
   --ink-2: #5A5E65;
@@ -33,6 +32,8 @@
   --header-bg: rgba(251, 250, 247, .86);
   --ring: rgba(28, 31, 37, .1);
   --paper: #FFFFFF;
+  /* The app's canvas stage in light mode, behind the app captures (taken in light mode) until they load. */
+  --app-stage: #F2F0EC;
   --little-fill: #DF9B44; --little-tint: #FFEBD2; --little-deep: #7E4600;
   --easy-fill: #69C27E; --easy-tint: #DCF7E1; --easy-deep: #0B5D2A;
   --detailed-fill: #47B7F1; --detailed-tint: #D6F4FF; --detailed-deep: #005D8D;
@@ -53,7 +54,6 @@
     --bg: #101215;
     --surface: #191C20;
     --surface-2: #24272B;
-    --stage: #0B0D10;
     --line: #32363B;
     --ink: #F3F2EF;
     --ink-2: #B0AEA8;
@@ -227,81 +227,20 @@ ul, ol { margin: 0; padding-left: 1.3em; }
 .motion-toggle .motion-play, .motion-toggle.is-paused .motion-pause { display: none; }
 .motion-toggle.is-paused .motion-play { display: inline-flex; }
 
-/* The iPad in the hero: the app's Canvas drawn in HTML, sized in container units like the mock, with the
-   drawing as a poster image and a looping video on top (the poster alone under reduced motion). */
+/* The iPad in the hero: a screen recording of the app's canvas (tools/capture), over its first frame as the poster
+   (the poster alone under reduced motion). The captures are of the app in light mode, so the screen keeps the app's
+   light stage color on a dark page too, until they load. */
 .ipad {
   background: #0E0F11; border-radius: clamp(20px, 3vw, 40px); padding: clamp(8px, 1.2vw, 15px);
   box-shadow: 0 0 0 1px var(--device-ring), var(--shadow-device);
 }
 .ipad-screen {
-  container-type: inline-size; position: relative; aspect-ratio: 4 / 3; overflow: hidden;
-  border-radius: clamp(12px, 1.9vw, 26px); background: var(--stage); color: var(--ink);
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+  border-radius: clamp(10px, 1.6vw, 22px); background: var(--app-stage);
 }
-.ipad-screen .icon { width: 1em; height: 1em; }
-.cv-top {
-  position: absolute; left: 2.4cqw; right: 2.4cqw; top: 2.2cqw; height: 6cqw;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 1.6cqw;
-}
-.cv-round {
-  width: 6cqw; height: 6cqw; border-radius: 50%; background: var(--surface);
-  display: grid; place-items: center; font-size: 3.2cqw; box-shadow: 0 1px 3px rgba(28, 31, 37, .08);
-}
-.cv-title { display: flex; flex-direction: column; gap: .7cqw; min-width: 0; }
-.cv-name { font-size: 2.2cqw; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; }
-.cv-progress { display: flex; align-items: center; gap: 1.2cqw; }
-.cv-track { width: 14cqw; height: .8cqw; border-radius: 1cqw; background: var(--line); overflow: hidden; }
-.cv-bar { display: block; height: 100%; width: 80%; background: var(--ink); border-radius: 1cqw; }
-.cv-count { font-size: 1.45cqw; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
-.cv-switch {
-  display: flex; gap: .3cqw; padding: .4cqw; border-radius: 1.6cqw; background: var(--surface);
-  box-shadow: 0 1px 3px rgba(28, 31, 37, .08);
-}
-.cv-seg {
-  height: 4.4cqw; padding: 0 1.6cqw 0 1.2cqw; border-radius: 1.2cqw; color: var(--ink-2);
-  display: flex; align-items: center; gap: .6cqw; font-size: 1.6cqw; font-weight: 800;
-}
-.cv-seg .icon { font-size: 2.3cqw; }
-.cv-seg.is-on { background: var(--ink); color: var(--on-ink); }
-.cv-rail {
-  position: absolute; left: 2.4cqw; top: 17cqw; width: 7cqw; padding: .8cqw; border-radius: 2.2cqw;
-  background: var(--surface); box-shadow: var(--shadow-float);
-  display: flex; flex-direction: column; align-items: center; gap: .5cqw;
-}
-.cv-tool { width: 5.4cqw; height: 5.4cqw; border-radius: 1.6cqw; display: grid; place-items: center; font-size: 2.7cqw; }
-.cv-tool.is-on { background: var(--ink); color: var(--on-ink); }
-.cv-tool.is-off { color: var(--ink-3); }
-.cv-rail .cv-rule { width: 4cqw; height: .15cqw; margin: .4cqw 0; background: var(--line); }
-.cv-paper {
-  position: absolute; left: 13cqw; top: 11.5cqw; width: 72cqw; aspect-ratio: 3 / 2; overflow: hidden;
-  border-radius: 1.6cqw; background: var(--paper);
-  box-shadow: 0 1px 3px rgba(28, 31, 37, .08), 0 8px 24px rgba(28, 31, 37, .08);
-}
-.cv-paper img, .cv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.cv-video { background: transparent; }
-.cv-dock {
-  position: absolute; left: 49cqw; bottom: 2.6cqw; transform: translateX(-50%); width: max-content;
-  padding: 1.2cqw 1.6cqw; border-radius: 2.6cqw; background: var(--surface); box-shadow: var(--shadow-float);
-  display: flex; align-items: center; gap: 1.1cqw;
-}
-.cv-swatch {
-  width: 4.6cqw; height: 4.6cqw; border-radius: 50%; background: var(--c); flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
-}
-.cv-swatch.is-on { transform: scale(1.1); box-shadow: 0 0 0 .35cqw var(--surface), 0 0 0 .75cqw var(--ink); }
-.cv-dock .cv-rule { width: .15cqw; height: 3.6cqw; background: var(--line); }
-.cv-any {
-  width: 4.6cqw; height: 4.6cqw; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center;
-  background: conic-gradient(#F4C95D, #EE8B6A, #CDB4DB, #47B7F1, #6A994E, #F4C95D);
-}
-.cv-any .icon {
-  width: 2.6cqw; height: 2.6cqw; padding: .4cqw; border-radius: 50%; background: var(--surface); stroke-width: 3;
-}
-.cv-palette {
-  display: flex; align-items: center; gap: .3cqw; padding-left: .6cqw;
-  font-size: 1.5cqw; font-weight: 800; color: var(--ink-2); white-space: nowrap;
-}
-.cv-palette .icon { font-size: 2.2cqw; }
-@media (prefers-reduced-motion: reduce) { .cv-video { display: none; } }
+.ipad-screen img, .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-video { background: transparent; }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
 
 /* ---- Home sections ---- */
 .section { padding: var(--section) var(--side); }
@@ -449,18 +388,9 @@ ul, ol { margin: 0; padding-left: 1.3em; }
   box-shadow: 0 0 0 1px var(--device-ring), 0 30px 60px -20px rgba(28, 31, 37, .35);
 }
 .mini-ipad-screen {
-  container-type: inline-size; position: relative; aspect-ratio: 4 / 3; overflow: hidden;
-  border-radius: clamp(10px, 1.5vw, 20px); background: var(--stage); color: var(--ink);
+  width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: clamp(8px, 1.3vw, 17px);
+  background: var(--app-stage);
 }
-.mini-ipad-screen .icon, .mini-iphone-screen .icon { width: 1em; height: 1em; }
-.mini-head { position: absolute; left: 3cqw; top: 3cqw; display: flex; align-items: center; gap: 2cqw; }
-.mini-head .cv-round { width: 6.5cqw; height: 6.5cqw; font-size: 3.6cqw; }
-.mini-name { font-size: 2.6cqw; font-weight: 800; white-space: nowrap; }
-.mini-paper {
-  position: absolute; left: 9cqw; right: 9cqw; top: 14cqw; aspect-ratio: 3 / 2; overflow: hidden;
-  border-radius: 1.8cqw; background: var(--paper); box-shadow: 0 8px 24px rgba(28, 31, 37, .08);
-}
-.mini-paper img, .mini-phone-paper img { width: 100%; height: 100%; object-fit: cover; }
 .mini-iphone { position: absolute; right: 0; bottom: 0; width: 27%; }
 .mini-soon {
   position: absolute; left: 50%; top: -44px; transform: translateX(-50%); z-index: 2;
@@ -474,26 +404,16 @@ ul, ol { margin: 0; padding-left: 1.3em; }
   background: #0E0F11; border-radius: clamp(18px, 2.6vw, 34px); padding: clamp(4px, .6vw, 8px);
   box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--device-ring), 0 30px 60px -20px rgba(28, 31, 37, .4);
 }
+/* iPhone 17: 402 × 874 points, the Dynamic Island 126 × 37 points, 11 from the top. */
 .mini-iphone-screen {
-  container-type: inline-size; position: relative; aspect-ratio: 393 / 852; overflow: hidden;
-  border-radius: clamp(14px, 2.1vw, 28px); background: var(--stage); color: var(--ink);
+  container-type: inline-size; position: relative; aspect-ratio: 402 / 874; overflow: hidden;
+  border-radius: clamp(14px, 2.1vw, 28px); background: var(--app-stage);
 }
-.mini-island { position: absolute; left: 50%; top: 3.2cqw; width: 30cqw; height: 8.6cqw; margin-left: -15cqw; border-radius: 6cqw; background: #000; }
-.mini-phone-head { position: absolute; left: 5cqw; right: 5cqw; top: 18cqw; display: flex; align-items: center; gap: 3cqw; }
-.mini-phone-head .cv-round { width: 11cqw; height: 11cqw; font-size: 6cqw; flex-shrink: 0; }
-.mini-phone-head .mini-name { font-size: 5cqw; }
-.mini-phone-paper {
-  position: absolute; left: 3cqw; right: 3cqw; top: 72cqw; aspect-ratio: 3 / 2; overflow: hidden;
-  border-radius: 3cqw; background: var(--paper); box-shadow: 0 4px 12px rgba(28, 31, 37, .08);
+.mini-iphone-screen img { width: 100%; height: 100%; object-fit: cover; }
+.mini-island {
+  position: absolute; left: 50%; top: 2.7cqw; width: 31.3cqw; height: 9.3cqw; margin-left: -15.65cqw;
+  border-radius: 4.65cqw; background: #000;
 }
-.mini-sheet {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 5cqw 5cqw 9cqw; border-radius: 8cqw 8cqw 0 0;
-  background: var(--surface); display: flex; flex-direction: column; gap: 4cqw;
-}
-.mini-swatches { display: flex; justify-content: space-between; }
-.mini-swatches span { width: 11cqw; height: 11cqw; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); }
-.mini-swatches .is-on { box-shadow: 0 0 0 .8cqw var(--surface), 0 0 0 1.6cqw var(--ink); }
-.mini-bar { height: 10cqw; border-radius: 3cqw; background: var(--surface-2); }
 
 /* Closing call to action */
 .closing {

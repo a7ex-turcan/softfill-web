@@ -2,37 +2,6 @@
   "app": "../softfill",
   "outputs": [
     {
-      "id": "hero-poster",
-      "type": "still",
-      "drawing": "sunny-meadow",
-      "palette": "garden-party",
-      "fill": {"except": [14, 15, 43, 23, 39, 34, 36, 31, 35, 30, 32]},
-      "widths": [768, 1152],
-      "out": "src/assets/img/home/hero-poster"
-    },
-    {
-      "id": "hero-video",
-      "type": "fillVideo",
-      "drawing": "sunny-meadow",
-      "palette": "garden-party",
-      "fill": {"except": [14, 15, 43, 23, 39, 34, 36, 31, 35, 30, 32]},
-      "sequence": [14, 15, 43, 23, 39, 34, 36, 31, 35, 30, 32],
-      "widths": [1152],
-      "bitrate": 700000,
-      "out": "src/assets/video/hero-1152"
-    },
-    {
-      "id": "hero-video-small",
-      "type": "fillVideo",
-      "drawing": "sunny-meadow",
-      "palette": "garden-party",
-      "fill": {"except": [14, 15, 43, 23, 39, 34, 36, 31, 35, 30, 32]},
-      "sequence": [14, 15, 43, 23, 39, 34, 36, 31, 35, 30, 32],
-      "widths": [768],
-      "bitrate": 380000,
-      "out": "src/assets/video/hero-768"
-    },
-    {
       "id": "tap",
       "type": "still",
       "drawing": "sunny-meadow",

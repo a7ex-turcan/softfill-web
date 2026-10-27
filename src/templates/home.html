@@ -23,48 +23,14 @@
   <div class="hero-visual">
     <div class="ipad">
       <div class="ipad-screen" role="img" aria-label="{{ hero_device_label }}">
-        <div class="cv-top">
-          <span class="cv-round">{{> icon/chevron-left }}</span>
-          <span class="cv-title">
-            <span class="cv-name">{{ device_drawing_name }}</span>
-            <span class="cv-progress"><span class="cv-track"><span class="cv-bar"></span></span><span class="cv-count">{{ device_progress }}</span></span>
-          </span>
-          <span class="cv-switch">
-            <span class="cv-seg is-on">{{> icon/fill }}{{ device_fill }}</span>
-            <span class="cv-seg">{{> icon/brush }}{{ device_draw }}</span>
-          </span>
-          <span class="cv-round">{{> icon/more }}</span>
-        </div>
-        <div class="cv-rail">
-          <span class="cv-tool is-on">{{> icon/fill }}</span>
-          <span class="cv-tool">{{> icon/eraser }}</span>
-          <span class="cv-rule"></span>
-          <span class="cv-tool">{{> icon/hash }}</span>
-          <span class="cv-tool">{{> icon/focus }}</span>
-          <span class="cv-tool">{{> icon/undo }}</span>
-          <span class="cv-tool is-off">{{> icon/redo }}</span>
-        </div>
-        <div class="cv-paper">
-          <picture>
-            <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif 768w, /assets/img/home/hero-poster-1152.avif 1152w" sizes="(max-width: 700px) 70vw, 560px">
-            <img src="/assets/img/home/hero-poster-1152.jpg" srcset="/assets/img/home/hero-poster-768.jpg 768w, /assets/img/home/hero-poster-1152.jpg 1152w" sizes="(max-width: 700px) 70vw, 560px" alt="" width="1152" height="768" fetchpriority="high">
-          </picture>
-          <video class="cv-video" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1">
-            <source src="/assets/video/hero-768.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (max-width: 700px)">
-            <source src="/assets/video/hero-1152.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (min-width: 700.02px)">
-          </video>
-        </div>
-        <div class="cv-dock">
-          <span class="cv-swatch" style="--c:#DDEFF5"></span>
-          <span class="cv-swatch is-on" style="--c:#8CC56B"></span>
-          <span class="cv-swatch" style="--c:#B9A3DD"></span>
-          <span class="cv-swatch" style="--c:#F2668B"></span>
-          <span class="cv-swatch" style="--c:#F3CF8F"></span>
-          <span class="cv-swatch" style="--c:#4E7A45"></span>
-          <span class="cv-rule"></span>
-          <span class="cv-any">{{> icon/plus }}</span>
-          <span class="cv-palette">{{ device_palette }}{{> icon/chevron }}</span>
-        </div>
+        <picture>
+          <source type="image/avif" srcset="/assets/img/home/hero-poster-{{ lang }}-768.avif 768w, /assets/img/home/hero-poster-{{ lang }}-1152.avif 1152w" sizes="(min-width: 1040px) 640px, calc(100vw - 64px)">
+          <img src="/assets/img/home/hero-poster-{{ lang }}-1152.jpg" srcset="/assets/img/home/hero-poster-{{ lang }}-768.jpg 768w, /assets/img/home/hero-poster-{{ lang }}-1152.jpg 1152w" sizes="(min-width: 1040px) 640px, calc(100vw - 64px)" alt="" width="1152" height="864" fetchpriority="high">
+        </picture>
+        <video class="hero-video" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1">
+          <source src="/assets/video/hero-{{ lang }}-768.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (max-width: 700px)">
+          <source src="/assets/video/hero-{{ lang }}-1152.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference) and (min-width: 700.02px)">
+        </video>
       </div>
     </div>
     <button class="motion-toggle" type="button" data-hero-toggle hidden>
@@ -277,34 +243,20 @@
     <div class="devices-visual">
       <div class="devices-stage">
         <div class="mini-ipad">
-          <div class="mini-ipad-screen" role="img" aria-label="{{ devices_ipad_label }}">
-            <span class="mini-head"><span class="cv-round">{{> icon/chevron-left }}</span><span class="mini-name">{{ device_drawing_name }}</span></span>
-            <span class="mini-paper">
-              <picture>
-                <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif">
-                <img src="/assets/img/home/hero-poster-768.jpg" alt="" width="768" height="512" loading="lazy" decoding="async">
-              </picture>
-            </span>
-          </div>
+          <picture>
+            <source type="image/avif" srcset="/assets/img/home/devices-ipad-{{ lang }}-1032.avif">
+            <img class="mini-ipad-screen" src="/assets/img/home/devices-ipad-{{ lang }}-1032.jpg" alt="{{ devices_ipad_label }}" width="1032" height="774" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="mini-iphone">
           {{> devices_phone_badge }}
           <div class="mini-iphone-frame">
-            <div class="mini-iphone-screen" role="img" aria-label="{{ devices_iphone_label }}">
-              <span class="mini-island"></span>
-              <span class="mini-phone-head"><span class="cv-round">{{> icon/chevron-left }}</span><span class="mini-name">{{ device_drawing_name }}</span></span>
-              <span class="mini-phone-paper">
-                <picture>
-                  <source type="image/avif" srcset="/assets/img/home/hero-poster-768.avif">
-                  <img src="/assets/img/home/hero-poster-768.jpg" alt="" width="768" height="512" loading="lazy" decoding="async">
-                </picture>
-              </span>
-              <span class="mini-sheet">
-                <span class="mini-swatches">
-                  <span style="--c:#DDEFF5"></span><span style="--c:#8CC56B" class="is-on"></span><span style="--c:#B9A3DD"></span><span style="--c:#F2668B"></span><span style="--c:#F3CF8F"></span><span style="--c:#4E7A45"></span>
-                </span>
-                <span class="mini-bar"></span>
-              </span>
+            <div class="mini-iphone-screen">
+              <picture>
+                <source type="image/avif" srcset="/assets/img/home/devices-iphone-{{ lang }}-402.avif">
+                <img src="/assets/img/home/devices-iphone-{{ lang }}-402.jpg" alt="{{ devices_iphone_label }}" width="402" height="874" loading="lazy" decoding="async">
+              </picture>
+              <span class="mini-island" aria-hidden="true"></span>
             </div>
           </div>
         </div>

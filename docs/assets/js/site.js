@@ -1,9 +1,9 @@
 /* Softfill website. Only what HTML cannot do on its own:
    - the language menu (a <details>, so it opens and closes without JavaScript) also closes on Escape, on a
      click outside it and when focus leaves it;
-   - Home's hero video starts if autoplay alone didn't start it (the poster stays if the browser refuses,
-     as Safari does in Low Power Mode), and its pause button appears once it plays (WCAG 2.2.2). Under
-     reduced motion no video source matches, so nothing loads and no button shows;
+   - Home's hero video (a screen recording of the app) starts if autoplay alone didn't start it (the poster
+     stays if the browser refuses, as Safari does in Low Power Mode), and its pause button appears once it
+     plays (WCAG 2.2.2). Under reduced motion no video source matches, so nothing loads and no button shows;
    - Home's time-lapse card plays its replay from the design's own play button and scrubber. Without
      JavaScript the card shows the finished drawing and no button. */
 (function () {
@@ -28,7 +28,7 @@
     });
   });
 
-  var hero = document.querySelector('.cv-video');
+  var hero = document.querySelector('.hero-video');
   if (hero) {
     var start = function () {
       if (!hero.paused || !hero.currentSrc) return;

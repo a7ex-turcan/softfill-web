@@ -14,7 +14,8 @@ src/strings/                   one JSON file of UI strings per language: en, de,
 src/articles/                  long-form bodies per language: privacy.en.html, terms.de.html, …
 src/assets/                    css/, fonts/ (self-hosted Nunito with its OFL licence), img/, video/, js/
 tools/                         helpers that write into src/: art/ (Home's art from the app's drawings),
-                               make_og.py (Open Graph images), screenshots.sh
+                               capture/ (Home's real app captures on the simulators), make_og.py (Open Graph
+                               images), screenshots.sh
 docs/                          the generated site that GitHub Pages serves; never edited by hand
 design_handoff_softfill_web/   the website design from Claude Design (read-only; regenerate from Claude
                                Design, don't hand-edit). README.md is the build spec for Home; copy-rules.md
@@ -68,9 +69,15 @@ tokens, states) and wins over this summary.
 7. A closing call to action.
 
 Built 2026-10-12, with these choices on top of the handoff:
-- The hero's drawing is a video (Sunny Meadow in the "Garden party" palette, eleven fills), with the HTML
-  canvas chrome around it so the device's text can be translated. 1152 px for wide screens, 768 px below
-  700 px; no video at all under reduced motion.
+- The hero's iPad is a real screen recording of the app (since 2026-10-27, Alex's call; it replaced an HTML
+  canvas mock around a rendered video): the iPad Pro 13-inch canvas in light mode, landscape, Sunny Meadow in
+  the "Garden party" palette going from 44 to 54 of 55 colored in ten taps, cross-faded back into its first
+  frame so the 17 s loop has no jump. One recording per language, so the canvas's own words are translated;
+  each page loads only its own (`hero-<lang>-1152.mp4` for wide screens, `-768` below 700 px; the poster is
+  the loop's first frame). No video at all under reduced motion. How it is made: Assets, Screenshots.
+- The Devices section shows real stills of the same piece at 54 of 55 on the iPad (landscape) and the
+  iPhone 17 (portrait, with the palette bar the app shows there), per language; only the bezels and the
+  Dynamic Island are CSS.
 - Art from the app's own drawings: the Little card is Sea Turtle (Coral reef), the Easy card Fox Den (Fox
   glade), the Detailed card Kingfisher Stream (Pine hollow), the Intricate card Moon Mandala (Cosmos), the
   time-lapse Pond Ducks (Beach day). The Detailed and Intricate cards replaced "First packs on the way" on
@@ -194,17 +201,40 @@ Assets:
 - **Line art**: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/Drawings/<id>/lineart.png`
   (black on white, 4-bit grey, 1536 wide for Little and Easy, 3520 for Detailed and Intricate), with
   `regions.bin` and `drawing.json` beside it.
-- **Colored art and videos**: `tools/art/build.sh` renders them from those files, as the app colors them: each
-  region in its palette color by slot, the line art multiplied on top. Slots count through the app's swatches
-  (`Palette.swatch(forSlot:)`): the main colors, or for palettes with second tones (Detailed and Intricate)
-  each main color followed by its second. `tools/art/recipe.json` lists every
+- **Colored art and the time-lapse video**: `tools/art/build.sh` renders them from those files, as the app
+  colors them: each region in its palette color by slot, the line art multiplied on top. Slots count through
+  the app's swatches (`Palette.swatch(forSlot:)`): the main colors, or for palettes with second tones
+  (Detailed and Intricate) each main color followed by its second. `tools/art/recipe.json` lists every
   output (drawing, palette, which regions, crop, sizes); `render --debug <id> out.png` numbers a drawing's
   regions for writing a recipe. Stills come out as AVIF with a JPEG fallback, videos as H.264 MP4, all with
-  the macOS frameworks only. Rerun it when the app's art or palettes change, then rebuild. Two things in
-  `home.html` and the strings follow the `hero-poster` output by hand: the hero's progress line ("44 of 55
-  colored": counted regions filled in its first frame, out of all counted regions) and the six dock swatches
-  (its palette's colors), in both device mocks. Change them together.
-- **Screenshots**: from the app on the iPad simulator now; iPhone ones after the Phase 3 layouts.
+  the macOS frameworks only. Rerun it when the app's art or palettes change, then rebuild. (Its `fillVideo`
+  type made the hero before the real recording; no output uses it now.)
+- **Screenshots** (the hero's recording and the Devices stills): real captures of a Debug build on the iOS 27.0
+  simulators, never mocks. `tools/capture/capture.sh <work-dir>` does it all, with `<work-dir>` outside the
+  repo (it holds DerivedData, about 1 GB, and the raw captures):
+  1. `sims`: makes (or reuses) two simulators of its own, "Softfill Web iPad Pro 13" and "Softfill Web iPhone
+     17", so the app repo's gate simulators are never touched; English (US) region and a 12-hour clock, light
+     mode, the status bar at 9:41 with full bars and battery.
+  2. `build`: copies `tools/capture/HeroCaptureScratchTests.swift` into `../softfill/SoftfillUITests/`, runs
+     `build-for-testing` and deletes it again (on any exit too). It is a scratch test: never commit it to the
+     app, whose UI tests are its Phase 2; the copy kept here is the source.
+  3. `seed`: reinstalls the app and colors Sunny Meadow in Garden party as a person would (swatch, then each
+     area at its center from `drawing.json`) up to the hero's start: everything but the eleven areas the old
+     rendered hero filled.
+  4. `record`: per language, the iPad run opens the piece with that language's launch arguments and signals the
+     host through files in `<work-dir>/sig`; the host starts `xcrun simctl io <udid> recordVideo --codec=h264`,
+     the test taps ten areas at a calm pace, takes its still, and undoes the ten so the next language starts
+     alike. The iPhone run does the same without a recording. The eleventh area stays white, so the drawing
+     never finishes and no celebration covers it. `CAPTURE_LANGS="de"` redoes one language.
+  5. `export`: pulls the stills out of the result bundles.
+  6. `encode` (`tools/capture/encode.swift`, AVFoundation, Core Image and ImageIO): turns the recording upright,
+     trims it from a second before the first tap to the end of the hold, resamples it to 30 fps, cross-fades back
+     into the first frame and writes `src/assets/video/hero-<lang>-<1152|768>.mp4` (about 1.1 MB and 0.66 MB) and
+     the posters, then the stills as `img/home/devices-ipad-<lang>-1032` and `devices-iphone-<lang>-402` (AVIF
+     and JPEG). Chrome never paints an ImageIO AVIF with an odd side, so every size stays even.
+  7. `clean` (only when asked for by name): clears the status bars and deletes both simulators.
+  Redo the captures when the canvas's look changes, then rebuild. The status bar's date stays in English on every
+  language's capture, as on the App Store screenshots (the simulators' region stays en_US for 9:41).
 - **App Store badges**: Apple's official, localized "Download on the App Store" badges, self-hosted in
   `src/assets/img/badges/app-store-<lang>.svg` (the build fails without one per language). Downloaded
   2026-10-27, unaltered, from Apple's marketing tools:
