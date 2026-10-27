@@ -199,19 +199,17 @@ func encodeHero(_ lang: String) {
         return image.transformed(by: CGAffineTransform(translationX: -image.extent.minX, y: -image.extent.minY))
     }
 
-    // Frames are streamed into both widths at once; a held sample buffer keeps its pixels alive.
+    // Frames are streamed into both widths at once; a CIImage keeps its pixel buffer alive while it is held.
     var writers: [(width: Int, video: VideoWriter)] = []
     var current: CIImage?
     var first: CIImage?
     var pending = output.copyNextSampleBuffer()
-    var held: CMSampleBuffer?
     let count = Int(((end - start) * Double(fps)).rounded())
     for index in 0..<count {
         let time = start + Double(index) / Double(fps)
         // The recording only has frames where the screen changed: hold the latest one at or before `time`.
         while let sample = pending, CMSampleBufferGetPresentationTimeStamp(sample).seconds <= time {
             if let buffer = CMSampleBufferGetImageBuffer(sample) {
-                held = sample
                 current = upright(buffer)
             }
             pending = output.copyNextSampleBuffer()
@@ -230,7 +228,6 @@ func encodeHero(_ lang: String) {
         }
         for (width, video) in writers { video.append(scaled(frame, toWidth: width)) }
     }
-    _ = held
     reader.cancelReading()
     guard let first, let last = current else { fail("\(lang): empty clip") }
 

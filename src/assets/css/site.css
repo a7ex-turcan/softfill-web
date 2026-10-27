@@ -388,7 +388,8 @@ ul, ol { margin: 0; padding-left: 1.3em; }
   box-shadow: 0 0 0 1px var(--device-ring), 0 30px 60px -20px rgba(28, 31, 37, .35);
 }
 .mini-ipad-screen {
-  width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: clamp(8px, 1.3vw, 17px); background: var(--app-stage);
+  width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: clamp(8px, 1.3vw, 17px);
+  background: var(--app-stage);
 }
 .mini-iphone { position: absolute; right: 0; bottom: 0; width: 27%; }
 .mini-soon {
@@ -409,7 +410,10 @@ ul, ol { margin: 0; padding-left: 1.3em; }
   border-radius: clamp(14px, 2.1vw, 28px); background: var(--app-stage);
 }
 .mini-iphone-screen img { width: 100%; height: 100%; object-fit: cover; }
-.mini-island { position: absolute; left: 50%; top: 2.7cqw; width: 31.3cqw; height: 9.3cqw; margin-left: -15.65cqw; border-radius: 4.65cqw; background: #000; }
+.mini-island {
+  position: absolute; left: 50%; top: 2.7cqw; width: 31.3cqw; height: 9.3cqw; margin-left: -15.65cqw;
+  border-radius: 4.65cqw; background: #000;
+}
 
 /* Closing call to action */
 .closing {

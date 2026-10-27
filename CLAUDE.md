@@ -201,10 +201,10 @@ Assets:
 - **Line art**: `../softfill/Packages/SoftfillKit/Sources/Content/Resources/Drawings/<id>/lineart.png`
   (black on white, 4-bit grey, 1536 wide for Little and Easy, 3520 for Detailed and Intricate), with
   `regions.bin` and `drawing.json` beside it.
-- **Colored art and the time-lapse video**: `tools/art/build.sh` renders them from those files, as the app colors them: each
-  region in its palette color by slot, the line art multiplied on top. Slots count through the app's swatches
-  (`Palette.swatch(forSlot:)`): the main colors, or for palettes with second tones (Detailed and Intricate)
-  each main color followed by its second. `tools/art/recipe.json` lists every
+- **Colored art and the time-lapse video**: `tools/art/build.sh` renders them from those files, as the app
+  colors them: each region in its palette color by slot, the line art multiplied on top. Slots count through
+  the app's swatches (`Palette.swatch(forSlot:)`): the main colors, or for palettes with second tones
+  (Detailed and Intricate) each main color followed by its second. `tools/art/recipe.json` lists every
   output (drawing, palette, which regions, crop, sizes); `render --debug <id> out.png` numbers a drawing's
   regions for writing a recipe. Stills come out as AVIF with a JPEG fallback, videos as H.264 MP4, all with
   the macOS frameworks only. Rerun it when the app's art or palettes change, then rebuild. (Its `fillVideo`
