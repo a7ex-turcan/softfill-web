@@ -47,7 +47,7 @@ ARTICLES = {"privacy", "terms"}
 
 # Product state. Flip these when the app changes; the templates pick strings and partials by them.
 # CLAUDE.md, "Product facts", says when each one is allowed to change.
-APP_LIVE = False        # App Store badge and Smart App Banner, instead of "Coming soon to the App Store"
+APP_LIVE = True         # App Store badge and Smart App Banner, instead of "Coming soon to the App Store"
 IPHONE_SHIPPED = True   # the "iPad and iPhone" section copy
 
 # A `{{> name }}` in a template resolves to one of these partials by product state.
